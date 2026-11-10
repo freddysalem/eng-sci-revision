@@ -1,0 +1,5 @@
+.src/
+# Thermofluids working files: raw course-text extractions and build scratch stay local
+.tfsrc/txt/
+.tfsrc/dedup/
+.tfsrc/_*

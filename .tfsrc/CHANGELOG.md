@@ -1,0 +1,39 @@
+# Thermofluids notes: corrections and additions log
+
+Every place where the website notes differ from the course material, with the source that justifies it.
+Lecture slides/notes take priority; anything changed is flagged in the notes with a Warning or Note callout.
+
+| # | Topic | Source (file · page) | Course material says | Notes use | Why |
+|---|---|---|---|---|---|
+| 1 | 1 Energy & conservation | Energy_and_fluids.pdf · slides 78–80 | Δp = ½ρ**g**u² and u = (2tρ_t g / ρ g cosθ)^½ | Δp = ½ρu², u = (2tρ_t g / ρ cosθ)^½ | Stray g: ½ρgu² has dimensions of N/m³, not Pa. The slide's own number (19.4 m/s) uses the corrected form. |
+| 2 | 1 Energy & conservation | Energy_and_fluids.pdf · slides 116–117 | F = ṁ(v₁−u)(1 − cos 50°) = 673 N | F = ṁ(v₁−u)(1 + cos 50°) = 3.10 kN | Slide figure shows the jet leaving backwards at 50° to the reverse direction, so outflow x-momentum is −ṁ(v₁−u)cos 50°; subtracting it adds. Standard Pelton result F = ṁ(v₁−u)(1 + cos β). |
+| 3 | 1 Energy & conservation | Energy_and_fluids.pdf · slide 75 | p₀ − p_s = ρ_m g ΔH | kept, plus Note: strictly (ρ_m − ρ)gΔH → 4.8 m/s | Manometer limbs are filled with the flowing water; course result 5.0 m/s kept as the lecture answer. |
+| 4 | 2 Building blocks of DA | Fundamentals_dim_anal_problem_solutions · Q1c | specific volume dimensions L/M³ | L³/M | Reciprocal of density (M/L³). |
+| 5 | 2 Building blocks of DA | Dimensionless_numbers_handout · p8; Wk1 notes Table 3 | Schmidt number Sc = μ/ρl | Sc = μ/ρ𝒟 (𝒟 = mass diffusivity, m²/s) | μ/ρl is not dimensionless (units m/s); Sc compares viscous to molecular (mass) diffusion. |
+| 6 | 1 Energy & conservation | Energy_and_fluids.pdf · slide 35 | specific volume written 𝜈 = 1/ρ | written v = 1/ρ | 𝜈 is used for kinematic viscosity μ/ρ everywhere else in the unit; avoids a clash. |
+| 7 | 1 Energy & conservation | Energy_and_fluids.pdf · slides 123–124 | W = −37.9 J, Q = −9.70 J | W = −37.2 J, Q = −9.3 J | Recomputed from the slide's own formulas (T₂/T₁ = 1.621, n = 1.300, ΔU = 27.9 J); slide values not mutually consistent. |
+| 8 | 4 Intro to hydraulics | Types_of_flow-handout · p3 | turbulent Δp ∝ V^0.75 | Δp ∝ u_m^1.75 | Typo on the slide; Intro_pipe_flows_notes §3.6 states u_m^1.75, and Blasius gives Δp ∝ u_m^(2−0.25). |
+| 9 | 4 Intro to hydraulics | Introduction_to_hydraulics_problem_sheet_solutions · Q3 | water Re = 3 × 10⁵ | Re = 3 × 10⁴ | 1000 × 1.0 × 0.03 / 10⁻³ = 3 × 10⁴; still turbulent, conclusion unchanged. |
+| 10 | 4 Intro to hydraulics | Introduction_to_hydraulics_problem_sheet · Q10c | open channel D_H = 4lw/(2h+w) | D_H = 4hw/(2h+w) | Area is hw; the printed solution has it right. |
+| 11 | 3 DA method | dim_anal_1 · slide 40 vs Intro_pipe_flows_notes §3.5 | C_f = Δp/½ρu² (DA) and C_f = τ_w/½ρu² (hydraulics) | both kept, explained in a Note | Same symbol, two definitions; related by Δp/½ρu² = 4C_f l/D. |
+| 12 | 4 Intro to hydraulics | Preview_hydraulics-handout · p4 | f = 8 (D/ρu_m²)(−dp/dx) = 4C_f | f = 2 (D/ρu_m²)(−dp/dx) = 8τ_w/ρu_m² = 4C_f | Substituting −dp/dx = 4τ_w/D into the slide form gives 16C_f; the written notes (Intro_pipe_flows §3.5) give f = 8τ_w/ρu_m² = 4C_f. |
+| 13 | 5 Laminar flows | Viscometry-handout · p8 | c = a − b, D = (a + b)/2 | c = b − a (b = outer radius), D = a + b (mean diameter) | With b > a the slide's c is negative; T = (π/4)hD³μΩ/c only follows from 4πha²b²μΩ/(b² − a²) when D = a + b. |
+| 14 | 5 Laminar flows | Lubrication-handout · p4 | δ = h(x=0)/l | δ = h(x=0)/a | From h = (a − x)δ, h(0) = aδ. |
+| 15 | 5 Laminar flows | Viscous_flows_problems_solutions · Q3c | F = (D² + 2Dh)Δp + 4DLU_p/h | F = (D² + 2Dh)Δp + 4μDLU_p/h | Missing μ in the shear term; the stated final answer is correct with μ. |
+| 16 | 6 Turbulent flows | Turbulent_flows_notes · eq (9) | fully rough: 1/√f = 2.0 log(Re f^½) + 1.14 | 1/√f = 2.0 log(D/e) + 1.14 | In the fully rough regime viscosity (so Re) no longer matters — the notes say so in the same paragraph. The Re→∞ limit of Colebrook gives −2 log(e/3.7D) = 2 log(D/e) + 1.136. |
+| 17 | 8 Minor losses | Minor_losses_notes · §3 | Borda–Carnot k = (A₁/A₂ − 1)² "based on u₂, the flow velocity in the larger pipe" | k = (1 − A₁/A₂)² based on u₁ (upstream, smaller pipe); equivalently (A₂/A₁ − 1)² on u₂ | Δp = ½ρ(u₁ − u₂)². The notes' own limit (A₂ → ∞ gives the exit loss, k → 1) only works with u₁. |
+| 18 | 8 Minor losses | Minor_losses_notes · §3 | A₁ → ∞, k → 0.5 "the exit loss for a pipe flush with a wall draining a large reservoir" | the ENTRANCE loss for a pipe draining a reservoir | Flow goes from the reservoir into the pipe. |
+| 19 | 8 Minor losses | Separation-handout · p9 | "Entrance to a large tank 0.5; Exit from a large tank 1.0" | pipe entrance (from a tank) 0.5; pipe exit (into a tank) 1.0 | Wording reads backwards; values are the standard ones. |
+| 20 | 8 Networks | Pipe_networks-handout · p8 | series example iterated f₂ = 0.038 | f₂ ≈ 0.027 (flagged) | U₁ = 0.48 m/s on the same slide needs f₂ ≈ 0.028; Colebrook at Re = 51 200, ε = 0.002 gives 0.026. Q = 2.41 × 10⁻³ m³/s unaffected. |
+| 21 | 8 Networks | Moody.pdf · slide 56 | Δp = 8ṁ²/(πρD⁴)(ξ + fL/D) | 8ṁ²/(π²ρD⁴)(ξ + fL/D) | ½ρu² with u = 4ṁ/πρD²; the slide's next coefficient (0.810 = 8/π²) is correct. |
+| 22 | 8 Networks | Hydraulics_example · parts c–e | "use the same fluid as in part a" (μ = 7.93 × 10⁻⁴) | flagged: numbers use μ = 3.2 × 10⁻⁴ from part b | u = 3.0 m/s, Re = 44 000 and Re = 14 600 u_m only follow with μ = 3.2 × 10⁻⁴; with part-a fluid, part c gives u = 2.63 m/s, Q = 5.2 × 10⁻⁵ m³/s, Re = 15 400. |
+| 23 | 8 Networks | Turbulent_flows_problem_sheet · Q3 | entrance ξ = 1.0, exit ξ = 0.5 | noted as swapped | Standard values are entrance 0.5, exit 1.0; the sum (and the 4.7 kW answer) is unchanged. |
+| 24 | 8 Networks | Turbulent_flows_problems_solutions · Q5a | 5 × 10⁴ = 792.5u²(…) | 492.5u²(…) | ½ρ = ½ × 985; the next line of the solution uses the correct value. |
+| 25 | 9 Waves & Mach | mach_number.pdf · slides 7, 22 | "bulk viscosity" | bulk modulus K | K = −V δp/δV is an elastic modulus (Pa), not a viscosity. |
+| 26 | 9 Waves & Mach | Speed(1).pdf · eq (1) | p₀/p = (1 + (γ−1)/2)^(γ/(γ−1)) | (1 + (γ−1)/2 · M²)^(γ/(γ−1)) | M² missing inside the bracket; the expansion that follows uses it. |
+| 27 | 10 Nozzles | Nozzles.pdf · slides 53, 57 | 1.51 × 10⁴ < 2.02 × 10⁴ Pa; ṁ_a = 0.657 kg/s; p₀ₐ = 2.78 × 10⁴ > 2.08 × 10⁴ Pa | 2.02 × 10⁵ Pa; ṁ_a = 0.0658 kg/s; p₀ₐ = 2.79 × 10⁶ > 2.08 × 10⁵ Pa | Exponent slips (0.11 MPa / 0.544 = 2.02 × 10⁵); ṁ_a = 19 × 3.47 × 10⁻³. Minimum total flow 0.069 kg/s unchanged. |
+| 28 | 10 Nozzles | Compressible_flow_problem_sheet_answers · Q1a | ṁ = 36.8 kg/s | ṁ = 39.8 kg/s | p M A √(γ/RT) with M = 0.931, T = 267 K gives 39.8; the question sheet's second answer line also says 39.8. |
+| 29 | 10 Nozzles | Compressible_flow_problem_sheet_answers · Q3 | k = 0.0040; "tyre"; p = 5 × 10⁻⁵ Pa | k = 0.0404; tank; 5 × 10⁵ Pa | Typos copied from the tyre example; answer 22.4 s confirmed (numerical blowdown gives 22.2 s). |
+| 30 | 11 Laval | Laval(1).pdf · slide 39 | "p₀ = p_t = 2.64 × 10⁵ Pa; therefore p₀/p_t = 1.32" | p₀ₑ/pₑ = 2.64/2.0 = 1.32 | Ratio is exit stagnation over exit static; M_e = 0.64 confirmed. |
+| 31 | 12 Shocks | Shock_examples.pdf · slides 24–25 | quadratic c = −1.13 → M₁ = 2.98, M₂ = 0.497; u_h = c − M₂√(γR·293) = 851 m/s | c = −0.871 → M₁ = 2.95, M₂ = 0.478; T₂ = 769 K behind the shock → u_h = 747 m/s, c = 1013 m/s | p₂/p₁ = 1 + 2γ/(γ+1)(M₁² − 1) = 10 gives M₁² = 8.71 directly. The gas behind the shock has been heated, so a₂ must use T₂, not 293 K. |
+| 32 | 12 Shocks | Shock_examples.pdf · slides 15–17 | c = 1230, u₂ = 291, u_a = 939 m/s | kept, with a Note | Data over-specified (p, T, C_p and γ, R not mutually consistent); u₂ = √(u₁² − 2C_pΔT) is a small difference of large numbers, so u_a ranges 0.86–0.97 km/s with rounding. Method shown is right. |
