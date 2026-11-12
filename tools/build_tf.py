@@ -29,7 +29,7 @@ def img_block(m):
     print(f'  ! missing image {name} — block dropped')
     return "['para', '']"
 
-def build():
+def build(write=True):
     files = sorted(glob.glob(os.path.join(NOTES, '*.js')))
     objs = []
     for f in files:
@@ -42,6 +42,8 @@ def build():
             "    if (this.__tfNotes) return this.__tfNotes;\n"
             "    const R = String.raw;\n"
             f"    this.__tfNotes = [\n{body}\n    ];\n"
+            "    // tolerate ['disp', 'single string'] and ['list', lead, numbered, 'string'] — renderer expects arrays\n"
+            "    this.__tfNotes.forEach((t) => (t.sections || []).forEach((sec) => (sec.blocks || []).forEach((b) => { if (b && b[0] === 'disp' && !Array.isArray(b[1])) b[1] = [b[1]]; if (b && (b[0] === 'eq') && !Array.isArray(b[1])) b[1] = []; })));\n"
             "    return this.__tfNotes;\n"
             "  }\n"
             f"{END}")
@@ -58,6 +60,24 @@ def build():
              f"{DEND}")
     a, b = t.index(DSTART), t.index(DEND) + len(DEND)
     t = t[:a] + dcode + t[b:]
+    BS, BE = '  // <<TF_BANK>>', '  // <</TF_BANK>>'
+    if BS in t:
+        bank = open(os.path.join(ROOT, '.tfsrc', 'bank.js'), encoding='utf-8').read()
+        a, b = t.index(BS), t.index(BE) + len(BE)
+        t = t[:a] + BS + '\n' + bank + '\n' + BE + t[b:]
+    FS, FE = '  // <<TF_FB>>', '  // <</TF_FB>>'
+    if FS in t:
+        fb = open(os.path.join(ROOT, '.tfsrc', 'formula_book.js'), encoding='utf-8').read()
+        a, b = t.index(FS), t.index(FE) + len(FE)
+        t = t[:a] + FS + '\n  _tfFbMeta() { return (\n' + fb + '\n  ); }\n' + FE + t[b:]
+    cfgp = os.path.join(ROOT, 'supabase', 'config.json')   # {"url": "https://xxx.supabase.co", "anonKey": "..."} — public by design
+    if os.path.exists(cfgp) and '// <<ACCT_CFG>>' in t:
+        import json as _j
+        c = _j.load(open(cfgp))
+        a, b = t.index('  // <<ACCT_CFG>>'), t.index('  // <</ACCT_CFG>>') + len('  // <</ACCT_CFG>>')
+        t = t[:a] + '  // <<ACCT_CFG>>\n  _acctCfg() { return { url: ' + _j.dumps(c.get('url', '')) + ', key: ' + _j.dumps(c.get('anonKey', '')) + ' }; }\n  // <</ACCT_CFG>>' + t[b:]
+    if not write:
+        return code, t
     open(TPL, 'w', encoding='utf-8').write(t)
     print(f'built {len(files)} topics, {len(code)//1024} KB of notes')
     return code
@@ -65,13 +85,16 @@ def build():
 def check(code):
     js = 'class X {\n' + code + '\n}\nconst x = new X(); const d = x._tfNotesData();\n' \
          'console.log(d.length + " topics, " + d.reduce((n,t)=>n+t.sections.length,0) + " sections");\n' \
-         'for (const t of d) for (const s of t.sections) for (const b of s.blocks) {\n' \
+         'for (const t of d) for (const s of t.sections) for (const [bi,b] of s.blocks.entries()) {\n' \
+         '  if (!Array.isArray(b)) { console.log("EMPTY/BAD BLOCK", t.key, s.num, "#"+bi, JSON.stringify(s.blocks[bi-1]||"").slice(0,140)); continue; }\n' \
          '  const ok = ["para","list","disp","eq","deriv","ex","warn","check","html","img","fig","svg"].includes(b[0]);\n' \
          '  if (!ok) console.log("UNKNOWN BLOCK", t.key, s.num, b[0]);\n' \
+         '  if ((b[0]==="eq"||b[0]==="check") && !Array.isArray(b[b[0]==="eq"?1:2])) console.log("BAD SHAPE", t.key, s.num, b[0]);\n' \
          '  if ((b[0]==="ex"||b[0]==="deriv") && b[2].some(l=>!["t","m","ans","img","svg","dgm"].includes(l[0]))) console.log("BAD LINE in", t.key, s.num, b[1]);\n' \
          '}\n'
-    p = os.path.join(ROOT, '.tfsrc', '_check.js'); open(p, 'w').write(js)
+    p = os.path.join(ROOT, '.tfsrc', f'_check_{os.getpid()}.js'); open(p, 'w').write(js)
     r = subprocess.run(['node', p], capture_output=True, text=True)
+    os.remove(p)
     print(r.stdout.strip() or '', r.stderr.strip()[:2000])
     return r.returncode == 0
 

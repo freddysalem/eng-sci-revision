@@ -17,8 +17,10 @@ The top-bar dropdown (`SUBJECT SWITCHER` in the template) picks the subject; cho
 localStorage `app_subject` (`"esa"` | `"tf"`).
 - **Engineering Science A** (`esa`): the original site, gated by `isESA`.
 - **Thermofluids** (`tf`): Resources reuses the Eng Sci A lecture-notes page (topic keys start `tf_`,
-  progress stored under the `thermo_` prefix); Formula Books is compiled from every `eq` table and
-  tagged `disp` equation in the notes; Today/Progress/Test/Play show "coming soon" states.
+  progress stored under the `thermo_` prefix); Formula Books is an A4 booklet (`_tfBookHtml`) compiled from every
+  `eq` table and tagged `disp` equation plus `.tfsrc/formula_book.js` (assumptions / "spot it" per topic);
+  Today/Progress/Test/Review/search are subject-aware (areas found/pipe/comp; storage `thermo_<area>_*`,
+  `tf_exam_date`, `tf_plan_v1`, `tf_score_history`; test bank `.tfsrc/bank.js`). Play is still a placeholder.
   Accent colour is `--tf` / `--tf-tint` / `--tf-line`. Areas: `_tfAreas()`.
 
 ## Thermofluids notes
@@ -45,3 +47,22 @@ or inside `ex`/`deriv` as a line (put it right after the question text so it sho
 - `python3 tools/place_tf_diagrams.py` holds the placement list (section + anchor → key) and reports
   defined-but-unused / used-but-undefined keys.
 The Moody chart stays the course image (`.tfsrc/img/moody.jpg`).
+
+## Module completion
+`markSubjectComplete(subj)` (button "Mark module completed" on Progress) marks every section read at confidence 5
+and sets `<subj>_completed` = ISO date → green "Completed" badges on Today/Progress/subject menu; "reopen" clears the flag.
+
+## Accounts (Supabase, plain REST — no SDK)
+- Config: `supabase/config.json` `{"url": "https://<ref>.supabase.co", "anonKey": "…"}` (anon key is public by design);
+  `build_tf.py` injects it between the `ACCT_CFG` markers. No config → accounts panel says "not switched on yet".
+- Schema + RLS: `supabase/schema.sql`. `supabase/admin.sql` (gitignored) makes the owner admin + flags Eng Sci A completed.
+- Sync: a snapshot of every non-`acct_*` localStorage key is upserted to `progress(user_id, data, updated_at)`,
+  debounced 4 s after any write (Storage.prototype is patched in `_acctInit`); newest copy wins on load.
+  Sign-out pushes then clears the browser. `profiles.completed` (e.g. `{esa}`) is applied once per account.
+- Admin (profiles.is_admin): "Pupils dashboard" in the account panel lists every pupil's coverage, tests, last active.
+
+## Review tooling
+- `python3 tools/review_build.py <name>` → private build `.review/<name>/index.html` (doesn't touch .src or index.html).
+- `node tools/note_shots.mjs <topicKey> <outDir> [--build name] [--theme light]` → headless-Chrome slices of a fully
+  expanded note (`index.html#review=<topicKey>` opens it with every section/solution open) + report.json of render errors.
+- Student/professor review loop briefs and outputs: `.tfsrc/_review/` (gitignored).

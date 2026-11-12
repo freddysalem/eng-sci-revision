@@ -9,7 +9,7 @@
     const mks = (id, c) => '<marker id="' + id + '" markerWidth="12" markerHeight="12" refX="0.5" refY="3.4" orient="auto" markerUnits="userSpaceOnUse"><path d="M9,0 L0,3.4 L9,6.8 Z" fill="' + c + '"></path></marker>';
     const W = (w, h, inner) => '<svg viewBox="0 0 ' + w + ' ' + h + '" width="100%" style="max-width:' + Math.min(w, 720) + 'px;height:auto;display:block;overflow:visible;">'
       + '<defs>' + mk('tfm-i', ink) + mk('tfm-t', terr) + mk('tfm-d', gold) + mk('tfm-g', grn) + mk('tfm-m', mut) + mk('tfm-v', vio) + mk('tfm-f', tf)
-      + mks('tfs-t', terr) + mks('tfs-i', ink) + mks('tfs-m', mut) + mks('tfs-f', tf)
+      + mks('tfs-t', terr) + mks('tfs-i', ink) + mks('tfs-m', mut) + mks('tfs-f', tf) + mks('tfs-d', gold) + mks('tfs-g', grn) + mks('tfs-v', vio)
       + '<pattern id="tf-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="' + mut + '" stroke-width="1.3"></line></pattern>'
       + '</defs>' + inner + '</svg>';
     const A = (x1, y1, x2, y2, c, w) => '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke="' + col(c || 'ink') + '" stroke-width="' + (w || 2) + '" marker-end="url(#tfm-' + (mid[c] || 'i') + ')"></line>';

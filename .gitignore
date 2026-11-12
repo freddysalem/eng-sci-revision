@@ -3,3 +3,5 @@
 .tfsrc/txt/
 .tfsrc/dedup/
 .tfsrc/_*
+.review/
+supabase/admin.sql
