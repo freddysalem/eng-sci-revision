@@ -145,9 +145,14 @@ begin
   update public.progress set data = '{}'::jsonb, updated_at = now() where user_id = uid;
 end $$;
 
-revoke execute on function public.admin_set_access(uuid, text, text[], timestamptz, text) from anon;
-revoke execute on function public.admin_delete_user(uuid) from anon;
-revoke execute on function public.admin_reset_progress(uuid) from anon;
+revoke execute on function public.admin_set_access(uuid, text, text[], timestamptz, text) from public, anon;
+grant execute on function public.admin_set_access(uuid, text, text[], timestamptz, text) to authenticated;
+revoke execute on function public.admin_delete_user(uuid) from public, anon;
+grant execute on function public.admin_delete_user(uuid) to authenticated;
+revoke execute on function public.admin_reset_progress(uuid) from public, anon;
+grant execute on function public.admin_reset_progress(uuid) to authenticated;
+revoke execute on function public.check_invite() from public, anon, authenticated;
+revoke execute on function public.handle_new_user() from public, anon, authenticated;
 
 -- sign-up form pre-check (callable before login): 'ok' | 'not_invited' | 'username_taken' | 'email_taken'
 create or replace function public.signup_check(p_email text, p_username text)
