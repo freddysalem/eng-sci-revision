@@ -72,7 +72,7 @@
         s += pr(70, (h) => 80 * Math.min(1, (h / 34) * (2 - Math.min(1, h / 34)))) + pr(210, (h) => 80 * Math.min(1, (h / 48) * (2 - Math.min(1, h / 48))));
         s += pr(350, (h) => 80 * Math.pow(Math.sin(Math.PI / 2 * Math.min(1, h / 64)), 2)) + pr(480, (h) => 80 * Math.pow(Math.min(1, h / 74), 2) * (3 - 2 * Math.min(1, h / 74)) - 26 * Math.exp(-h / 14));
         s += poly(fn((x) => [x, yw(330) + (x - 330) * 0.25 - 4], 330, 590, 10), 'terr', 1.3, '6 4') + dot(330, yw(330), 'terr', 4) + N(330, yw(330) + 30, 'separation point', { a: 'middle', c: 'terr' });
-        s += PA('M 470 ' + (yw(470) - 12) + ' C 520 ' + (yw(470) - 30) + ' 540 ' + (yw(540) - 10) + ' 500 ' + (yw(500) - 4), 'terr', 1.4) + N(600, 196, 'reversed flow', { a: 'end', c: 'terr' }) + L(566, 200, 552, 238, 'terr', 1, '2 2');
+        s += PA('M 470 ' + (yw(470) - 12) + ' C 520 ' + (yw(470) - 30) + ' 540 ' + (yw(540) - 10) + ' 500 ' + (yw(500) - 4), 'terr', 1.4) + N(600, 196, 'reversed flow', { a: 'end', c: 'terr' }) + L(556, 201, 538, 224, 'terr', 1, '2 2');
         s += N(70, 50, 'attached', { a: 'middle' }) + N(340, 50, 'du/dy = 0 at wall', { a: 'middle' }) + N(500, 70, 'wake / recirculation', { a: 'middle' }) + N(260, 280, 'adverse pressure gradient: pressure rises in the flow direction', { a: 'middle', c: 'mtx' });
         return W(620, 292, s);
       };
@@ -84,5 +84,18 @@
         s += A2(60, 38, 470, 38, 'mut') + V(265, 32, '10 m', { a: 'middle', c: 'mtx', fs: 13 }) + A2(500, 70, 500, 150, 'mut') + V(508, 114, '1 m', { c: 'mtx', fs: 13 });
         s += N(150, 100, 'original pipe, D = 50 mm', { a: 'middle' }) + N(278, 124, 'new spur: D = 37.5 mm,', { a: 'end', c: 'terr' }) + N(278, 139, 'length L', { a: 'end', c: 'terr' }) + N(320, 226, 'each leg: one bend ξ = 1, exit ξ = 2 (lecture)', { a: 'middle' });
         return W(640, 236, s);
+      };
+
+      // r3: Q3 pump figure override (only topic 8 uses tf_pump_tanks) — elbow label moved left of the elbow, in ink, with the table value
+      D.tf_pump_tanks = () => {
+        const run8 = (pts2, d) => { let s = ''; pts2.forEach((seg) => { s += P('M ' + seg.map((p) => p.join(' ')).join(' L '), 'ink', d + 4); }); pts2.forEach((seg) => { s += P('M ' + seg.map((p) => p.join(' ')).join(' L '), 'tint', d); }); return s; };
+        const hv8 = (x, y) => pgon([[x - 10, y - 9], [x - 10, y + 9], [x, y], [x + 10, y - 9], [x + 10, y + 9], [x, y]], 'paper', 'ink', 1.4);
+        let s = P('M 30 210 L 30 290 L 150 290 L 150 210', 'ink', 2) + R(32, 236, 116, 52, 'tint') + L(32, 236, 148, 236, 'tf', 1.4) + P('M 450 40 L 450 120 L 570 120 L 570 40', 'ink', 2) + R(452, 66, 116, 52, 'tint') + L(452, 66, 568, 66, 'tf', 1.4);
+        s += run8([[[150, 274], [330, 274], [330, 96], [450, 96]]], 10) + hv8(230, 274) + ci(330, 230, 16, 'ink', 1.6, null, 'paper') + pgon([[322, 238], [338, 230], [322, 222]], 'ink') + vlv8(330, 160);
+        s += N(230, 300, 'globe valve ξ = 10', { a: 'middle' }) + N(352, 234, 'pump, η = 0.75') + N(352, 164, 'gate valve ½ open ξ = 2.1');
+        s += T(314, 92, '90° elbow: ξ = 0.3 (sheet)', { a: 'end', fs: 12 }) + T(314, 108, 'table, screwed: ξ = 1.5', { a: 'end', fs: 11.5, c: 'terr' });
+        s += L(150, 236, 610, 236, 'mut', 1, '3 3') + L(568, 66, 610, 66, 'mut', 1, '3 3') + A2(600, 66, 600, 236, 'gold') + V(586, 156, '30 m', { c: 'gold', fs: 13, a: 'end' });
+        s += A(170, 262, 210, 262, 'tf', 1.6) + N(150, 320, '120 m of 5 cm structural steel, Q = 360 L/min', { a: 'start' });
+        return W(640, 330, s);
       };
     }

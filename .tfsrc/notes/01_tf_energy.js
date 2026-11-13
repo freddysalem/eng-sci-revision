@@ -174,7 +174,7 @@
         ]],
         ['list', R`**Assumptions** (all must hold):`, true, [
           R`Steady.`, R`Incompressible.`, R`Inviscid (no viscous forces).`, R`One-dimensional.`,
-          R`**Fully developed / no shear** — the course words this as "no velocity gradient along a streamline". The speed *may* change along a streamline (it does in a nozzle); what must be absent are the **velocity gradients that create shear stress** (and the developing-profile momentum-flux term of 1.6). If you also want one value of $p_0$ for the **whole** flow, not just one streamline, the oncoming flow must be uniform (no velocity gradient **across** streamlines).`
+          R`**Fully developed / no shear** — the course words this as "no velocity gradient along a streamline". The speed **can** change along a streamline (it does in a nozzle); what must be absent are the **velocity gradients that create shear stress** (and the developing-profile momentum-flux term of 1.6). If you also want one value of $p_0$ for the **whole** flow, not just one streamline, the oncoming flow must be uniform (no velocity gradient **across** streamlines).`
         ]],
         ['warn', 'Key Insight', [
           R`**Speed is achieved at the expense of pressure**: high speed ↔ low pressure.`,
@@ -312,9 +312,8 @@
         ['list', R`**What goes into ΣF on the fluid** (forces on the control volume, each resolved in the direction considered):`, false, [
           R`**Pressure × area on each inlet and outlet face**, acting **inwards** (pushing on the fluid in the CV): $+p_1A_1$ at an inlet, $-p_2A_2$ at an outlet for a straight flow along $+x$. Use **gauge** pressure — atmospheric pressure acts all round the outside and cancels — so a free jet at atmosphere contributes **zero**.`,
           R`**Force from the walls / vane / nozzle** on the fluid — usually the unknown you are solving for (it includes wall pressure and shear).`,
-          R`**Weight** $
-ho g V$ if the direction has a vertical component (often negligible).`,
-          R`In the Pelton and plate examples the jet is at atmospheric pressure everywhere, so only the vane force appears. In a pipe bend or nozzle the **pressure terms usually dominate** — see the nozzle example below and Q8.`
+          R`**Weight** $\rho g V$ if the direction has a vertical component (often negligible).`,
+          R`In the Pelton and plate examples the jet is at atmospheric pressure everywhere, so only the vane force appears. In a pipe bend or nozzle the **pressure terms usually dominate** — see the fire-hose nozzle example (after the Pelton example) and Q8.`
         ]],
         ['ex', 'Example — force on a Pelton wheel bucket (lecture)', [
           ['t', R`A water jet ($d = 0.20$ m, $v_1 = 10$ m/s, $\rho = 1000$ kg/m³) strikes buckets moving at $u = 4$ m/s. Each bucket turns the flow (relative to the bucket) through **130°**, so it leaves at **50° to the reverse (−x) direction**, split equally between the two halves. No losses. Find the force on the rotor at constant speed.`],
@@ -338,7 +337,7 @@ ho g V$ if the direction has a vertical component (often negligible).`,
           ['svg', 'tf_nozzle_cv', 'Control volume round the water in the nozzle: gauge pressure p₁A₁ pushes in at the inlet face, the exit jet is at atmosphere (zero gauge), and the nozzle wall pushes on the water with the unknown F.'],
           ['ans'],
           ['t', R`**Mass:** $A_1 = \frac{\pi}{4}(0.08)^2 = 5.03\times10^{-3}$ m², $A_2 = \frac{\pi}{4}(0.025)^2 = 4.91\times10^{-4}$ m², so $u_1 = Q/A_1 = 1.99$ m/s, $u_2 = Q/A_2 = 20.4$ m/s, $\dot m = \rho Q = 10$ kg/s.`],
-          ['t', R`**Bernoulli** inlet → exit (same height, $p_2 = 0$ gauge):`],
+          ['t', R`**Bernoulli** inlet → exit — valid because the flow is **steady, inviscid (losses neglected) and level** (all stated in the question), along one streamline; $p_2 = 0$ gauge (free jet):`],
           ['m', R`p_1 = \tfrac12\rho\left(u_2^2 - u_1^2\right) = 500\left(20.37^2 - 1.99^2\right) = 2.06\times10^5\ \text{Pa (gauge)}`],
           ['t', R`**Momentum in $x$** (+ = flow direction), with $F$ = force of the nozzle on the water:`],
           ['m', R`\textstyle\sum F_{\text{on fluid}} = p_1A_1 - p_2A_2 + F = \dot m\,(u_2 - u_1)`],

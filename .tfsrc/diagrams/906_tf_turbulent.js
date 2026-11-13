@@ -62,15 +62,15 @@
         s += A(x2 - 30, yc + r - 10, x1 + 30, yc + r - 10, 'terr', 1.8);
         // momentum flux out through the curved surface
         [285, 325, 365].forEach((x) => { s += A(x, yc - r, x, yc - r - 30, 'vio', 1.6); });
-        s += T(40, yb + 30, 'violet arrows: x-momentum carried out through the curved surface,', { fs: 13, c: 'vio' }) + T(40, yb + 48, 'ρ u′v′ per unit area (time-averaged)', { fs: 13, c: 'vio' });
+        s += V(x2 + 8, yc - r - 22, 'ρ u′v′', { c: 'vio', fs: 15 });
         // dimensions
         s += A2(225, yc, 225, yc - r, 'gold') + V(212, yc - r / 2 + 5, 'r', { c: 'gold', a: 'end' });
         s += A2(600, yc, 600, yt, 'gold') + V(588, yc - 46, 'R', { c: 'gold', a: 'end' });
         s += A2(x1, yb - 20, x2, yb - 20, 'mut') + V((x1 + x2) / 2, yb - 26, 'δx', { c: 'mtx', fs: 13, a: 'middle' });
         // coordinates
         s += A(60, yc + 70, 110, yc + 70, 'ink', 1.4) + V(116, yc + 75, 'x, u', { fs: 13 }) + A(60, yc + 70, 60, yc + 26, 'ink', 1.4) + V(66, yc + 28, 'r, v', { fs: 13 });
-        s += lab(40, yb + 70, 'steady in the mean, fully developed: the end-face momentum fluxes cancel', { fs: 13 });
-        return W(680, 330, s);
+        s += lab(40, yb + 34, 'steady in the mean, fully developed: end-face momentum fluxes cancel', { fs: 15 });
+        return W(680, 300, s);
       };
 
       // ---------- 6.2 Physical picture of the Reynolds stress ----------

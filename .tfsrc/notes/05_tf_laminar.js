@@ -221,7 +221,9 @@
           ['t', R`This is positive for $0 < x < l$: the wedge is pressurised. **5 · Thrust** per unit width, $T = \int_0^l (p - p_a)\,dx$; substitute $s = a - x$ (so $x(l - x) = -s^2 + (2a - l)s - a(a - l)$):`],
           ['m', R`T = \frac{6\mu V}{\delta^2(2a - l)}\int_{a-l}^{a}\left(-1 + \frac{2a - l}{s} - \frac{a(a - l)}{s^2}\right)ds = \frac{6\mu V}{\delta^2(2a - l)}\left[(2a - l)\ln\frac{a}{a - l} - 2l\right]`],
           ['m', R`\Rightarrow\; T = \frac{6\mu V}{\delta^2}\left[\ln\!\left(\frac{a}{a - l}\right) - \frac{2l}{2a - l}\right]`],
-          ['t', R`Check: no thrust with no taper ($a \to \infty$, the bracket falls like $l^3/12a^3$) or no motion ($V = 0$).`]
+          ['t', R`Check: no thrust with no taper ($a \to \infty$) or no motion ($V = 0$). For $a \to \infty$ put $u = l/a \ll 1$ and expand both terms of the bracket:`],
+          ['m', R`\ln\frac{a}{a-l} - \frac{2l}{2a-l} = -\ln(1-u) - \frac{u}{1-u/2} = \left(u + \frac{u^2}{2} + \frac{u^3}{3} + \dots\right) - \left(u + \frac{u^2}{2} + \frac{u^3}{4} + \dots\right) \approx \frac{u^3}{12} = \frac{l^3}{12a^3}`],
+          ['t', R`so $T \approx \dfrac{\mu V l^3}{2\delta^2 a^3} \to 0$.`]
         ]],
         ['warn', 'Note', [
           R`The slide defines $\delta = h(x{=}0)/l$; from $h = (a - x)\delta$ it is $\delta = h(0)/a = [h(0) - h(l)]/l$ (the slope of the face).`,
@@ -237,10 +239,13 @@
         ['eq', [
           ['Journal bearing: force parallel to OC', R`-\frac{\varepsilon^2}{c^2(1-\varepsilon^2)^2}\mu\Omega R L^3`, '[N]', 'ε = e/c. Slide prints ε³ — see the Warning.'],
           ['Journal bearing: force perpendicular to OC', R`\frac{\pi\varepsilon}{4c^2(1-\varepsilon^2)^{3/2}}\mu\Omega R L^3`, '[N]', ''],
-          ['Journal bearing oil flow', R`Q = \Omega R\varepsilon c`, '[m²/s]', 'Per unit length of bearing.']
+          ['Journal bearing oil flow (supply = side leakage)', R`Q = \Omega R\varepsilon c`, '[m²/s]', 'Per unit length L. Circumferential flow ΩRh/2 at the widest gap c(1+ε) minus that at the thinnest c(1−ε); see the Note.']
         ]],
         ['warn', 'Warning', [
-          R`The slide gives the force parallel to $OC$ as $-\dfrac{\varepsilon^3}{c^2(1-\varepsilon^2)^2}\mu\Omega RL^3$. These are the short-bearing results, and the standard (Ocvirk) component along the line of centres goes as $\varepsilon^{2}$: both components come from the same pressure, $\propto \varepsilon\sin\theta/(1+\varepsilon\cos\theta)^3$, and $\int_0^\pi \frac{\sin\theta\cos\theta}{(1+\varepsilon\cos\theta)^3}d\theta = -\frac{2\varepsilon}{(1-\varepsilon^2)^2}$ supplies only one more $\varepsilon$. The perpendicular component on the slide matches the standard result exactly. Use $\varepsilon^2$; if an exam paper states the slide's form, use what it gives.`
+          R`The slide gives the force parallel to $OC$ as $-\dfrac{\varepsilon^3}{c^2(1-\varepsilon^2)^2}\mu\Omega RL^3$. The journal-bearing formulas are short-bearing (Ocvirk) results, and in that theory the component along the line of centres goes as $\varepsilon^{2}$ (Ocvirk's film pressure is $p - p_a = \frac{3\mu\Omega}{c^2}\left(\frac{L^2}{4} - z^2\right)\frac{\varepsilon\sin\theta}{(1+\varepsilon\cos\theta)^3}$, already $\propto \varepsilon$; resolving it along $OC$ brings in $\int_0^\pi \frac{\sin\theta\cos\theta}{(1+\varepsilon\cos\theta)^3}d\theta = -\frac{2\varepsilon}{(1-\varepsilon^2)^2}$, one more $\varepsilon$, and integrating over the area $R\,d\theta\,dz$ with $\int(L^2/4 - z^2)\,dz = L^3/6$ this gives exactly $-\frac{\varepsilon^2}{c^2(1-\varepsilon^2)^2}\mu\Omega RL^3$). The perpendicular component on the slide matches the standard result exactly. Use $\varepsilon^2$; if an exam paper states the slide's form, use what it gives.`
+        ]],
+        ['warn', 'Note', [
+          R`**What $Q = \Omega R\varepsilon c$ is.** Short-bearing theory neglects the circumferential pressure gradient, so oil is carried round by pure Couette drag: $\Omega R h/2$ per unit length $L$ at a section where the film is $h$. That is $\Omega R c(1+\varepsilon)/2$ at the widest section and only $\Omega R c(1-\varepsilon)/2$ at the thinnest. The difference, $\Omega R\varepsilon c$ per unit length (total $\Omega R\varepsilon cL$), cannot get through the narrow gap — it is squeezed out of the bearing ends (side leakage), and the oil supply must replace it. It is **not** the flow past any one section (that would be $\Omega Rh/2$, e.g. $\Omega Rc/2$ at the mean clearance); it is the flow rate the lubrication system must deliver. It vanishes when the journal is concentric ($\varepsilon = 0$).`
         ]],
         ['warn', 'When to use', [
           R`**Slipper:** be able to explain the mechanism and follow steps 1–5 (continuity ⇒ $dp/dx$, integrate, $p = p_a$ at both ends gives $C$ and $Q$, integrate $p - p_a$ for $T$); quote the thrust.`,
@@ -303,7 +308,7 @@
         ]],
         ['ex', 'Q5 — film down an incline', [
           ['t', R`Show that a film of depth $H$ on a plane at $\alpha$ has $u = \frac{\rho g}{\mu}\sin\alpha\left(Hy - \frac{y^2}{2}\right)$ and $Q = \frac{H^3}{3\mu}\rho g\sin\alpha$.`],
-          ['svg', 'tf_film_incline', 'On an incline only the component of gravity along the slope, ρg sin α, drives the film.'],
+          ['svg', 'tf_film_incline', 'On an incline only the component of gravity along the slope, ρg sin α, drives the film. Axes: x down the slope, y normal to the plane from its surface (y here plays the role of x in §5.4).'],
           ['ans'],
           ['t', R`Here $y$ is measured **normal** to the plane from its surface (it plays the role of $x$ in §5.4) and $x$ runs down the slope. Element $\delta x \times \delta y$, unit width. Along the slope: the weight component $\rho g\sin\alpha\,\delta x\,\delta y$ and the net shear $\frac{d\tau}{dy}\delta y\,\delta x$, with $\tau = \mu\,du/dy$. The pressure is $p_{atm}$ at the free surface and varies hydrostatically **across** the film (from $g\cos\alpha$), the same at every $x$ — so there is no pressure gradient along the slope.`],
           ['m', R`\rho g\sin\alpha\,\delta x\,\delta y + \frac{d\tau}{dy}\delta y\,\delta x = 0 \;\Rightarrow\; \mu\frac{d^2u}{dy^2} = -\rho g\sin\alpha`],
@@ -324,6 +329,18 @@
           ['m', R`Q = \frac{h^3}{12\mu}\left(-\frac{dp}{dx}\right)_{eff} + \frac{U_0h}{2} = 2\cdot\frac{h^3}{12\mu}\left(-\frac{dp}{dx}\right)_{eff} \;\Rightarrow\; U_0 = \frac{h^2}{6\mu}\cdot\frac{\rho g z}{L} = \frac{g z h^2}{6\nu L}`],
           ['m', R`U_0 = \frac{9.81\times0.5\times(10^{-3})^2}{6\times10^{-7}\times10} = \frac{4.91\times10^{-6}}{6\times10^{-6}} = 0.82\ \text{m/s}`],
           ['t', R`**Note:** the printed profile reads $u = \frac{1}{2\mu}\left(-\frac{\Delta p}{L}\right)(y^2 - yh) + \frac{y}{h}U_0$; the Poiseuille part should be $(hy - y^2)$, i.e. $u = \frac{1}{2\mu}\frac{\rho g z}{L}(hy - y^2) + \frac{y}{h}U_0$. Its flow rate and final answer are correct.`]
+        ]],
+        ['ex', 'Practice — spindle viscometer: viscosity from measured torque and speed (not on the course sheet)', [
+          ['t', R`**Practice example** (the viscometry handout has no numerical case; realistic values chosen). A spindle of radius $a = 20.0$ mm turns at $N = 60$ rpm inside a fixed cup of radius $b = 21.0$ mm, immersed to depth $h = 60$ mm in an oil. The viscometer reads a torque $T = 0.0400$ N m. Find $\mu$. [1.96 Pa s]`],
+          ['ans'],
+          ['t', R`**Geometry and speed:** clearance $c = b - a = 1.0$ mm; mean diameter $D = a + b = 41.0$ mm (so $c \ll D$ ✓); $\Omega = 2\pi N/60 = 2\pi$ rad/s $= 6.283$ rad/s.`],
+          ['t', R`**Use (5.5):**`],
+          ['m', R`\mu = \frac{4c}{\pi hD^3}\,\frac{T}{\Omega} = \frac{4\times(1.0\times10^{-3})\times0.0400}{\pi\times0.060\times(0.041)^3\times6.283} = \frac{1.60\times10^{-4}}{\pi\times0.060\times6.892\times10^{-5}\times6.283} = \frac{1.60\times10^{-4}}{8.163\times10^{-5}}`],
+          ['m', R`\mu = 1.96\ \text{Pa s}`],
+          ['t', R`**Check with the exact torque** $T = \frac{4\pi ha^2b^2}{b^2 - a^2}\mu\Omega$:`],
+          ['m', R`\mu = \frac{T(b^2 - a^2)}{4\pi ha^2b^2\Omega} = \frac{0.0400\times(4.41 - 4.00)\times10^{-4}}{4\pi\times0.060\times(4.00\times10^{-4})(4.41\times10^{-4})\times6.283} = 1.962\ \text{Pa s}`],
+          ['t', R`The small-gap formula is only $0.12\,\%$ low here, because $ab \approx (D/2)^2$ is in error by $c^2/4$, tiny for $c/D = 0.024$.`],
+          ['t', R`**Sanity check:** about 2000 times water's ($10^{-3}$ Pa s), glycerol-like — a heavy oil, well suited to a laminar Couette gap at this speed. Remember $\Omega$ in **rad/s** and every length in **metres**; $D$ is cubed, so entering $D$ alone in mm instead of m changes the answer by $10^9$.`]
         ]]
       ]
     }

@@ -1,7 +1,7 @@
 {
   key: 'tf_networks', area: 'pipe', num: '8', week: 'Week 4',
   name: 'Minor Losses, Pipe Networks and System Design',
-  triggers: 'valves, bends, elbows, tees · entrance/exit loss · sudden expansion/contraction · Borda–Carnot · vena contracta · contraction coefficient C_c · loss coefficient k (ξ) · reference velocity · pump between two tanks · pipes in series/parallel · equivalent resistance K · branching network · draining tank · iterate',
+  triggers: 'valves, bends, elbows, tees · entrance/exit loss · sudden expansion/contraction · Borda–Carnot · vena contracta · contraction coefficient Cc · loss coefficient k (ξ) · reference velocity · pump between two tanks · pipes in series/parallel · equivalent resistance K · branching network · draining tank · iterate',
   sections: [
     {
       num: '', title: 'Revision Objectives — Minor Losses, Pipe Networks and System Design',
@@ -61,7 +61,7 @@
       num: '8.3', title: 'Sudden Expansions and Contractions',
       blocks: [
         ['para', R`A **sudden expansion** is the one minor loss that can be calculated, from a momentum + mass + energy balance across the step. It matches experiment to a few per cent — the **Borda–Carnot** result. Below, $k_{u_1}$ means $k$ on $\tfrac12\rho u_1^2$ (upstream, small pipe) and $k_{u_2}$ means $k$ on $\tfrac12\rho u_2^2$ (downstream, large pipe). Here $\Delta p_{loss}$ is the **loss**, i.e. the drop in **total** pressure $p + \tfrac12\rho u^2$ — not the change in static pressure.`],
-        ['disp', [ R`\boxed{\begin{gathered}\Delta p_{loss} = \tfrac12\rho(u_1 - u_2)^2 \\ k_{u_1} = \left(1 - A_1/A_2\right)^2 \\ k_{u_2} = \left(A_2/A_1 - 1\right)^2\end{gathered}} \tag{8.1}` ]],
+        ['disp', [ R`\boxed{\begin{gathered}\Delta p_{loss} = \tfrac12\rho(u_1 - u_2)^2 \\[4pt] k_{u_1} = \left(1 - A_1/A_2\right)^2 \\[4pt] k_{u_2} = \left(A_2/A_1 - 1\right)^2\end{gathered}} \tag{8.1}` ]],
         ['deriv', 'Derivation — the Borda–Carnot loss', [
           ['svg', 'tf_expansion_cv', 'Control volume from the step face (section 1) to where the flow has re-attached (section 2). The corner fluid is nearly stagnant, so p₁ acts over the whole area A₂.'],
           ['t', R`**Mass:** $u_1A_1 = u_2A_2$, so $\dot m = \rho u_2A_2$.`],
@@ -83,7 +83,7 @@
         ['para', R`A **sudden contraction** is less certain. Inertia makes the flow **neck down** to a **vena contracta** of area $A_c < A_2$ just downstream of the step. The acceleration into the neck loses little; most of the loss is the **re-expansion** from $A_c$ to $A_2$, which is just Borda–Carnot applied from $A_c$ to $A_2$:`],
         ['svg', 'tf_contraction', 'Sudden contraction: the flow necks down to the vena contracta (the narrowest jet area), then re-expands to fill the small pipe — most of the loss is in the re-expansion.'],
         ['disp', [ R`u_c = u_2\frac{A_2}{A_c} = \frac{u_2}{C_c}:\qquad \Delta p_{loss} = \tfrac12\rho(u_c - u_2)^2 = \tfrac12\rho u_2^2\left(\frac{A_2}{A_c} - 1\right)^2` ]],
-        ['disp', [ R`\boxed{\begin{gathered}k = \left(\frac{A_2}{A_c} - 1\right)^2 = \left(\frac{1}{C_c} - 1\right)^2 \text{ on } \tfrac12\rho u_2^2 \\ C_c = \frac{A_c}{A_2} = \text{fn}\!\left(\frac{A_2}{A_1}\right)\end{gathered}} \tag{8.2}` ]],
+        ['disp', [ R`\boxed{\begin{gathered}k = \left(\frac{A_2}{A_c} - 1\right)^2 = \left(\frac{1}{C_c} - 1\right)^2 \text{ on } \tfrac12\rho u_2^2 \\[4pt] C_c = \frac{A_c}{A_2} = \text{fn}\!\left(\frac{A_2}{A_1}\right)\end{gathered}} \tag{8.2}` ]],
         ['para', R`The **contraction coefficient** $C_c$ is measured. Standard (Weisbach) values, with the $k$ they give and the common empirical fit $k \approx 0.42(1 - A_2/A_1)$ for comparison:`],
         ['html', '<table style="border-collapse:collapse;width:100%;max-width:480px;font-size:13px;margin:4px 0;color:var(--k3A332B);text-align:center"><thead><tr style="color:var(--k8C8273)"><th style="padding:5px 10px;border-bottom:1px solid var(--kE7E0D0)">A₂/A₁</th><th style="padding:5px 10px;border-bottom:1px solid var(--kE7E0D0)">C<sub>c</sub></th><th style="padding:5px 10px;border-bottom:1px solid var(--kE7E0D0)">k = (1/C<sub>c</sub> − 1)²</th><th style="padding:5px 10px;border-bottom:1px solid var(--kE7E0D0)">0.42(1 − A₂/A₁)</th></tr></thead><tbody>' +
           [['0', '0.617', '0.38', '0.42'], ['0.1', '0.624', '0.36', '0.38'], ['0.2', '0.632', '0.34', '0.34'], ['0.3', '0.643', '0.31', '0.29'], ['0.4', '0.659', '0.27', '0.25'], ['0.5', '0.681', '0.22', '0.21'], ['0.6', '0.712', '0.16', '0.17'], ['0.7', '0.755', '0.11', '0.13'], ['0.8', '0.813', '0.05', '0.08'], ['0.9', '0.892', '0.02', '0.04'], ['1.0', '1.00', '0', '0']].map((r) => '<tr>' + r.map((x) => '<td style="padding:4px 10px;border-bottom:1px solid var(--kE7E0D0)">' + x + '</td>').join('') + '</tr>').join('') + '</tbody></table>'],
@@ -196,7 +196,7 @@
           ['m', R`L = \frac{\rho D^{19/4}}{0.0716\,\dot m_i^{7/4}\mu^{1/4}}\left(\Delta p - 0.202\frac{\dot m_i^2\xi}{\rho D^4}\right) = \frac{41.8 - 34.2}{11.0} = 0.69 \approx 0.70\ \text{m} \qquad (D = 0.0375\ \text{m here})`]
         ]],
         ['warn', 'Note', [
-          R`The lecture's exit coefficient $\xi = 2$ differs from the standard table value 1.0. With $\xi_{exit} = 1$ (so $\xi = 2$ per leg) the same method gives $\Delta p = 38.2$ Pa and $L = 1.40$ m. The answer is very sensitive because most of the spur's $\Delta p$ is minor loss — so state the coefficients you use. The lecture also treats the whole 11 m as downstream of the junction; any common pipe upstream carries $\dot m_i$ for both legs and drops out of the balance. Both legs have $Re \approx 4000$–$6000$, only just turbulent.`
+          R`The lecture's exit coefficient $\xi = 2$ differs from the standard table value 1.0. With $\xi_{exit} = 1$ (so $\xi = 2$ per leg) the same method gives $\Delta p = 38.2$ Pa and $L = 1.40$ m. The answer is very sensitive because most of the spur's $\Delta p$ is minor loss — so state the coefficients you use. **In an exam, use the $\xi$ values the question gives** (here the lecture's exit $\xi = 2$, giving 0.69 m); use table values only when none are given, and say which you used. The lecture also treats the whole 11 m as downstream of the junction; any common pipe upstream carries $\dot m_i$ for both legs and drops out of the balance. Both legs have $Re \approx 4000$–$6000$, only just turbulent.`
         ]]
       ]
     },
@@ -204,7 +204,7 @@
       num: '8.6', title: 'Worked Design: a Draining Tank',
       blocks: [
         ['para', R`A large tank (liquid depth $L_2 = 0.30$ m, effectively constant) drains through a vertical pipe of length $L_1 = 0.30$ m and diameter $d$; liquid $\rho = 930$ kg/m³. The flow is driven by the head $\rho gL_2$ at the top of the pipe **plus** the weight of the liquid in the pipe itself.`],
-        ['svg', 'tf_draining_tank', 'Draining tank: the liquid head plus the weight of the liquid in the vertical pipe drives the flow out of the bottom.'],
+        ['svg', 'tf_draining_tank', 'Draining tank: the liquid head plus the weight of the liquid in the vertical pipe drives the flow out of the bottom. Not to scale — the pipe is drawn far wider than d = 1.22 mm so it can be labelled.'],
         ['deriv', 'Derivation — force balance on the liquid in the pipe', [
           ['t', R`**Control volume:** the liquid inside the pipe, length $L_1$, area $A = \pi d^2/4$. Flow is fully developed, so there is no net momentum flux. Inlet and exit kinetic energy and minor losses are **neglected** here (part e adds them).`],
           ['t', R`**Pressures** (gauge): the tank is large and nearly still, so the pipe inlet is at $\rho gL_2$; the outlet is at atmospheric, 0. So $\Delta p = \rho gL_2$.`],
@@ -251,7 +251,7 @@
       num: 'Ex 8', title: 'Problem Sheet — Systems with Minor Losses', wk: true,
       blocks: [
         ['ex', 'Q3 — pump between two tanks', [
-          ['t', R`Water ($\rho = 1000$, $\mu = 10^{-3}$) is pumped between two large tanks, from a source surface to a destination surface 30 m higher. The line is 120 m of 5 cm pipe with the roughness of structural steel ($e = 0.025$ mm on the course Moody chart). It contains an open globe valve ($\xi = 10$), a screwed 90° elbow ($\xi = 0.3$ on the sheet; the §8.2 table gives 1.5 for threaded — see the Note) and a half-open gate valve ($\xi = 2.1$); entrance and exit losses are given as $\xi = 1.0$ and $0.5$. Pump efficiency 0.75; $Q = 360$ L/min. Power? [4.7 kW]`],
+          ['t', R`Water ($\rho = 1000$, $\mu = 10^{-3}$) is pumped between two large tanks, from a source surface to a destination surface 30 m higher. The line is 120 m of 5 cm pipe with the roughness of structural steel ($e = 0.025$ mm on the course Moody chart). It contains an open globe valve ($\xi = 10$), a screwed 90° elbow ($\xi = 0.3$ on the sheet; the §8.2 table gives 1.5 for threaded — see the Note) and a half-open gate valve ($\xi = 2.1$); entrance and exit losses are given as $\xi = 1.0$ and $0.5$. Pump efficiency 0.75; $Q = 360$ L/min. Power? [slide: 4.7 kW; computed here 4.6 kW with $\xi_{elbow} = 0.3$, 4.7 kW with 1.5]`],
           ['svg', 'tf_pump_tanks', 'Pump head = major loss + every minor loss + the 30 m lift.'],
           ['ans'],
           ['t', R`Tank surface to tank surface, so eq. (8.4) applies (both ends at atmospheric pressure, $u \approx 0$).`],
@@ -262,7 +262,7 @@
           ['t', R`The model solution rounds $u_m$ up to 3.1 m/s first, which gives 225 + 67 + 294 = 586 kPa and exactly 4.7 kW.`]
         ]],
         ['warn', 'Note', [
-          R`Two things in Q3's data differ from the §8.2 table. (1) A **screwed** (threaded) regular 90° elbow is $\xi = 1.5$ in the table; 0.3 is the **flanged** value. The quoted answer uses 0.3. With 1.5, $\sum\xi = 15.1$ and the power is 583 kPa → 4.7 kW, essentially unchanged. (2) The entrance 1.0 / exit 0.5 values are swapped relative to the standard 0.5 / 1.0; the sum is the same.`
+          R`Two things in Q3's data differ from the §8.2 table. (1) A **screwed** (threaded) regular 90° elbow is $\xi = 1.5$ in the table; 0.3 is the **flanged** value. The quoted answer uses 0.3. With 1.5, $\sum\xi = 15.1$, $\Delta p_{pump} = 583$ kPa and the power is 4.7 kW, essentially unchanged (vs 578 kPa → 4.6 kW with 0.3). (2) The entrance 1.0 / exit 0.5 values are swapped relative to the standard 0.5 / 1.0; the sum is the same.`
         ]],
         ['ex', 'Q4 — chimney draught with minor losses', [
           ['t', R`Return to the chimney of the Introduction-to-Hydraulics sheet (topic 4). The wind speed rises linearly from 0 at the ground to 10 m/s at 20 m, so at the top of the 10 m chimney $u_w = 5$ m/s. Air: $\rho = 1.2$ kg/m³, $\mu = 1.7\times10^{-5}$ kg/m s. Smooth pipe, $D = 0.1$ m, $L = 10$ m (Blasius). Losses: entrance 0.5, exit 1.0, and two changes of direction (bottom and top) 0.5 each. Draught velocity? [2.16 m/s]`],

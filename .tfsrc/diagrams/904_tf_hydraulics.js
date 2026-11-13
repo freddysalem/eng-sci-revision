@@ -1,6 +1,7 @@
     // ===================== Topic 4 · Introduction to hydraulics — professor revisions (r1) =====================
     {
       const S = (x, y, s, o) => T(x, y, s, Object.assign({ serif: true, fs: 13 }, o || {}));          // sans label (no mono 'u' that reads like 'υ')
+      const rho = '<tspan font-family="\'Times New Roman\', Times, Georgia, serif" font-style="normal" font-size="1.25em">ρ</tspan>';   // Greek rho in a serif face so it never reads as pressure p
 
       // Hagen (1839) — only used by Topic 4, so the shared key is redefined; axis now u_m, transition labelled 2000–4000
       D.tf_hagen = () => {
@@ -43,10 +44,10 @@
         s += poly(fn((y) => [x0 + 200 * (1 - Math.pow((y - yc) / 100, 2)), y], yt, yb, 60), 'tf', 2.4);
         s += poly(fn((y) => [x0 + 122.4 * Math.pow(Math.max(0, 1 - Math.abs(y - yc) / 100), 1 / 7), y], yt, yb, 120), 'terr', 2.4);
         s += A(x0, 214, x0 + 98, 214, 'gold', 1.6) + S(x0 + 46, 207, 'u_m', { c: 'gold', a: 'middle', fs: 14 });
-        s += S(x0 + 228, 70, 'inviscid: uniform, u = u_m', { fs: 13, c: 'gold' });
-        s += S(x0 + 228, 96, 'turbulent: u/u_{max} = (y/R)^{1/7},  u_m ≈ 0.8 u_{max}', { fs: 13, c: 'terr' });
-        s += S(x0 + 228, 122, 'laminar: parabola,  u_m = ½ u_{max}', { fs: 13, c: 'tf' });
-        s += N(x0 + 228, 196, 'y = R − r = distance from the wall', { c: 'mtx' }) + N(x0 + 228, 212, 'all three carry the same Q = u_m A', { c: 'mtx' });
+        s += S(x0 + 222, 68, 'inviscid: uniform, u = u_m', { fs: 15, c: 'gold' });
+        s += S(x0 + 222, 98, 'turbulent: u/u_{max} = (y/R)^{1/7}', { fs: 15, c: 'terr' }) + S(x0 + 236, 118, 'u_m ≈ 0.82 u_{max}  (≈ 0.8)', { fs: 14, c: 'terr' });
+        s += S(x0 + 222, 148, 'laminar: parabola,  u_m = ½ u_{max}', { fs: 15, c: 'tf' });
+        s += S(x0 + 222, 192, 'y = R − r = distance from the wall', { fs: 13.5, c: 'ink' }) + S(x0 + 222, 212, 'all three carry the same Q = u_m A', { fs: 13.5, c: 'mtx' });
         return W(640, 262, s);
       };
 
@@ -70,9 +71,9 @@
         const O = [575, 222], Wl = 100, sn = Math.sin(deg * Math.PI / 180), cs = Math.cos(deg * Math.PI / 180);
         const al = [O[0] - Wl * sn * cs, O[1] + Wl * sn * sn], nr = [O[0] + Wl * sn * cs, O[1] + Wl * cs * cs];
         s += dot(O[0], O[1], 'ink', 3) + A(O[0], O[1], O[0], O[1] + Wl, 'ink', 2) + A(O[0], O[1], al[0], al[1], 'terr', 2.2) + L(O[0], O[1], nr[0], nr[1], 'mut', 1.3, '4 3') + L(al[0], al[1], O[0], O[1] + Wl, 'mut', 1, '2 3');
-        s += S(O[0] + 6, O[1] + Wl + 14, 'ρg (weight / volume)', { fs: 12.5, a: 'middle' }) + S(al[0] - 4, al[1] + 4, 'ρg sin θ', { c: 'terr', fs: 13.5, a: 'end' }) + S(nr[0] + 6, nr[1] + 2, 'ρg cos θ', { c: 'mtx', fs: 12.5 });
+        s += S(O[0] + 6, O[1] + Wl + 14, 'weight / volume = ' + rho + 'g', { fs: 14, a: 'middle' }) + S(al[0] - 4, al[1] + 4, rho + 'g sin θ', { c: 'terr', fs: 16, a: 'end' }) + S(nr[0] + 6, nr[1] + 2, rho + 'g cos θ', { c: 'mtx', fs: 14 });
         s += P('M ' + O[0] + ' ' + (O[1] + 34) + ' A 34 34 0 0 0 ' + (O[0] + 34 * sn).toFixed(1) + ' ' + (O[1] + 34 * cs).toFixed(1), 'ink', 1) + S(O[0] + 6, O[1] + 50, 'θ', { fs: 12 });
-        s += N(370, 372, 'along the pipe, gravity ρg sin θ per unit volume points down-slope: it opposes the flow when θ > 0', { a: 'middle' });
+        s += S(350, 372, 'along the pipe, gravity ' + rho + 'g sin θ per unit volume (' + rho + ' = density) points down-slope: it opposes the flow when θ > 0', { a: 'middle', fs: 12, c: 'mtx' });
         return W(700, 384, s);
       };
 
@@ -126,5 +127,18 @@
         s += A(cxl + cw + 6, top - 12, 440, top - 12, 'tf', 1.8) + S(446, top - 8, 'u_w = 5 m/s', { c: 'tf', fs: 13 }) + S(446, top + 12, 'p < p₀', { c: 'terr', fs: 13 });
         s += A2(560, gy, 560, top, 'mut') + S(552, gy - 5 * m, '10 m', { c: 'gold', fs: 13, a: 'end' }) + N(cxl + cw / 2, top - 30, 'D = 0.1 m', { a: 'middle' });
         return W(600, 318, s);
+      };
+    
+      // Floating-element shear balance (only Topic 4 uses tf_shear_balance): labels moved clear of the cantilever stem
+      D.tf_shear_balance = () => {
+        let s = wall(30, 150, 210, 'down') + wall(290, 150, 520, 'down') + R(220, 150, 60, 7, 'paper', 'ink', 1.6) + L(250, 157, 250, 232, 'ink', 3) + R(222, 232, 56, 10, 'url(#tf-hatch)', 'ink', 1.2);
+        const ys = []; for (let y = 145; y >= 50; y -= 13) ys.push(y);
+        s += prof(120, ys, (y) => { const h = 150 - y, d = 82; return h >= d ? 110 : 110 * (h / d) * (2 - h / d); }, 'tf');
+        s += A2(80, 150, 80, 68, 'gold') + V(64, 112, 'δ', { c: 'gold' }) + V(238, 58, 'u', { c: 'tf' }) + T(247, 62, '∞', { fs: 11, c: 'tf' });
+        s += A(270, 142, 236, 142, 'terr', 2) + V(282, 140, 'τ_w on the disc', { c: 'terr', fs: 13 });
+        s += L(283, 156, 300, 176, 'mtx', 1) + S(306, 180, 'floating disc, area A,', { fs: 13, c: 'mtx' }) + S(306, 197, 'flush with the wall', { fs: 13, c: 'mtx' });
+        s += L(255, 222, 300, 228, 'mtx', 1) + S(306, 232, 'cantilever (bends by F)', { fs: 13, c: 'mtx' });
+        s += V(360, 70, 'F = τ_w A,  τ_w = μ (du/dy)|_wall', { fs: 13.5 });
+        return W(560, 258, s);
       };
     }

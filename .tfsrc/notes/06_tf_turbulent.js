@@ -47,7 +47,7 @@
         ['svg', 'tf_reynolds_decomp', 'Reynolds’s model: the measured signal u(t) = a constant time-mean ū + a fluctuation u′(t) that averages to zero over a long enough time T.'],
         ['para', R`Likewise $v = \bar v + v'$ with $\overline{v'} = 0$, and in fully developed pipe flow there is no mean radial flow, $\bar v = 0$. The mean of a **single** fluctuation is zero, but the mean of a **product** of two fluctuations need not be — and that product is what appears when we do a momentum balance.`],
         ['deriv', 'Derivation — momentum balance on a cylinder of fluid', [
-          ['svg', 'tf_turb_cv', 'Control volume: a coaxial cylinder of radius r and length δx. Pressure acts on the ends, a stress τ on the curved surface, and the fluctuations carry x-momentum out through the curved surface.'],
+          ['svg', 'tf_turb_cv', 'Control volume: a coaxial cylinder of radius r and length δx. Pressure acts on the ends (terracotta), a stress τ on the curved surface (terracotta), and the fluctuations carry x-momentum out through the curved surface (violet arrows): a flux of ρu′v′ per unit area, time-averaged.'],
           ['t', R`Take a coaxial cylinder of radius $r$ and length $\delta x$ (gold, above). The flow is steady in the mean and fully developed, so the momentum carried in through one end equals that carried out through the other. Balance the $x$-direction forces against the net momentum outflow through the curved surface.`],
           ['t', R`**Pressure** on the ends (net force in $+x$):`],
           ['m', R`p\,\pi r^2 - \left(p + \frac{dp}{dx}\delta x\right)\pi r^2 = -\frac{dp}{dx}\,\delta x\,\pi r^2`],
@@ -56,7 +56,11 @@
           ['m', R`\rho\,\overline{uv} = \rho\,\overline{(\bar u + u')(\bar v + v')} = \rho\left(\bar u\bar v + \bar u\,\overline{v'} + \bar v\,\overline{u'} + \overline{u'v'}\right) = \rho\,\overline{u'v'}`],
           ['t', R`because $\bar v = 0$ and $\overline{u'} = \overline{v'} = 0$. Only the product of fluctuations survives. Momentum balance (forces = net outflow of momentum):`],
           ['m', R`-\frac{dp}{dx}\,\delta x\,\pi r^2 + \mu\frac{d\bar u}{dr}\,2\pi r\,\delta x = \rho\,\overline{u'v'}\;2\pi r\,\delta x`],
-          ['t', R`Divide by $2\pi r\,\delta x$ and rearrange:`]
+          ['t', R`Divide every term by the curved-surface area $2\pi r\,\delta x$ (note $\pi r^2/2\pi r = r/2$):`],
+          ['m', R`-\frac{r}{2}\frac{dp}{dx} + \mu\frac{d\bar u}{dr} = \rho\,\overline{u'v'}`],
+          ['t', R`Move the viscous term to the right-hand side; it changes sign, while $\rho\overline{u'v'}$ stays where it is and keeps its sign:`],
+          ['m', R`-\frac{r}{2}\frac{dp}{dx} = -\mu\frac{d\bar u}{dr} + \rho\,\overline{u'v'}`],
+          ['t', R`Both terms on the right are positive in a pipe: $d\bar u/dr < 0$, so $-\mu\,d\bar u/dr > 0$ is the (positive) viscous retarding stress, and $\overline{u'v'} > 0$ (see below). This is (6.2):`]
         ]],
         ['disp', [ R`-\frac{r}{2}\frac{dp}{dx} = -\mu\frac{d\bar u}{dr} + \rho\overline{u'v'} \tag{6.2}` ]],
         ['para', R`The left-hand side is the **total retarding stress** $\tau(r)$ that the outer fluid exerts on the cylinder. It is the same as in laminar flow (topic 5), so $\tau$ still rises linearly from zero on the axis to $\tau_w = -\frac{R}{2}\frac{dp}{dx}$ at the wall. In laminar flow it is carried by viscosity alone ($-\mu\,d\bar u/dr$). In turbulent flow there is an extra term, $\rho\overline{u'v'}$, which behaves like a stress: the **Reynolds stress**.`],
@@ -80,7 +84,7 @@
       blocks: [
         ['para', R`Turbulent mixing behaves like **diffusion**: momentum moves down its gradient, from fast fluid to slow. Molecular viscosity already works like this. Newton's law of viscosity can be written as a diffusion law for momentum per unit volume, $\rho u$, with diffusivity $\nu = \mu/\rho$ (m²/s), just as Fick's law has mass diffusing with diffusivity $\mathcal{D}$. Here $\tau$ is read as the **flux of $x$-momentum in the $+y$ direction**:`],
         ['disp', [ R`\tau = -\nu\frac{d(\rho u)}{dy} \tag{6.3}` ]],
-        ['para', R`For constant $\rho$ this is just $\tau = -\mu\,du/dy$. It adds nothing new for laminar flow, but it suggests how to model turbulence. Boussinesq modelled the Reynolds stress the same way, with an extra diffusivity, the **eddy viscosity** $\epsilon$:`],
+        ['para', R`For constant $\rho$ this is just $\tau = -\mu\,du/dy$. It adds nothing new for laminar flow, but it suggests how to model turbulence. Boussinesq modelled the Reynolds stress the same way, with an extra diffusivity, the **eddy viscosity** $\epsilon$ (units m²/s, like $\nu$):`],
         ['disp', [ R`\rho\overline{u'v'} = -\rho\,\epsilon\frac{d\bar u}{dr} \qquad\Rightarrow\qquad -\frac{r}{2}\frac{dp}{dx} = -\rho(\nu + \epsilon)\frac{d\bar u}{dr} \tag{6.4}` ]],
         ['para', R`The second form comes from substituting the first into (6.2). It is (6.3) with $y \to r$ and diffusivity $\nu + \epsilon$: molecular plus turbulent momentum diffusion. Since $d\bar u/dr < 0$ in a pipe, $\epsilon > 0$ gives $\overline{u'v'} > 0$, matching the physical picture in §6.2.`],
         ['para', R`$\epsilon$ is still unknown. Prandtl's **mixing length** model estimates it. Write $y = R - r$ for the **distance from the wall** (so $d\bar u/dy = -d\bar u/dr$, positive). Suppose a parcel moves a distance $l$ across the flow before it mixes with its new surroundings. It arrives with a velocity difference $u' \sim l\,|d\bar u/dy|$. The eddies are roughly as strong sideways as lengthways, so $v' \sim u'$, and therefore $\overline{u'v'} \sim l^2(d\bar u/dy)^2$. Comparing with (6.4) gives:`],
@@ -90,11 +94,7 @@
           R`**Sign convention for $\tau$.** In (6.3) and (6.4) the coordinate ($y$, or $r$ in the pipe) points from fast fluid towards slow fluid, the way momentum diffuses. So $\tau$ is a momentum **flux**: it carries a minus sign and still comes out positive, because $d\bar u/dr < 0$. From here on, $y = R - r$ is measured **from the wall towards the axis** (towards the faster fluid), so $d\bar u/dy > 0$. $\tau$ then means the **magnitude** of the shear stress on a layer: $\tau = (\mu + \rho\epsilon)\,d\bar u/dy$, with $\tau_w = \mu\,(d\bar u/dy)_{y=0}$ at the wall. The physics is the same; the axis points the other way, so the minus sign disappears.`
         ]],
         ['eq', [
-          ['Momentum "diffusion" (6.3)', R`\tau = -\nu\frac{d(\rho u)}{dy}`, '[Pa]', 'Newton\'s law as diffusion of ρu down its gradient; diffusivity ν = μ/ρ.'],
           ['Turbulent momentum diffusion', R`\tau = -(\nu + \epsilon)\frac{d(\rho\bar u)}{dy}`, '[Pa]', 'Molecular + turbulent diffusivity; in the pipe (y → r) this is (6.4).'],
-          ['Eddy viscosity (Boussinesq)', R`\rho\overline{u'v'} = -\rho\,\epsilon\frac{d\bar u}{dr}`, '[Pa]', 'ε has units m²/s like ν.'],
-          ['Turbulent pipe momentum balance', R`-\frac{r}{2}\frac{dp}{dx} = -\rho(\nu + \epsilon)\frac{d\bar u}{dr}`, '[Pa]', 'ν = μ/ρ molecular; ε turbulent.'],
-          ['Prandtl mixing length', R`\epsilon = l^2\left|\frac{\partial\bar u}{\partial y}\right|, \qquad l = \kappa\,\frac{\partial\bar u/\partial y}{\partial^2\bar u/\partial y^2}`, '[m²/s]', 'l = typical distance an eddy carries momentum; κ ≈ 0.4 (von Kármán); y = R − r from the wall.'],
           ['Near-wall mixing length', R`l = \kappa y \;\Rightarrow\; \epsilon = \kappa u^* y,\quad \frac{\epsilon}{\nu} = \kappa\,\frac{yu^*}{\nu}`, '[m²/s]', 'In the log-law region (§6.5).']
         ]],
         ['deriv', 'Link — the mixing length leads to the log law', [
@@ -158,6 +158,7 @@
         ['para', R`This is the **log law**, valid for $30 \lesssim yu^*/\nu \lesssim 1000$. (The base-10 form uses $\ln x = 2.303\log_{10}x$: $2.5 \times 2.303 = 5.76 \approx 5.75$.) The log law (6.8) and the sublayer law (6.7) cross at $yu^*/\nu \approx 11.6$. The real profile blends smoothly from one to the other through the **buffer (transition) region**, $5 \lesssim yu^*/\nu \lesssim 30$, where neither law is accurate.`],
         ['para', R`**On the centreline.** Putting $y = R$ (so $\bar u = u_{max}$) in (6.8):`],
         ['disp', [ R`\frac{u_{max}}{u^*} = 2.5\ln\!\left(\frac{Ru^*}{\nu}\right) + 5.5 \tag{6.9}` ]],
+        ['para', R`$u^*$ appears on both sides of (6.9), so given $u_{max}$, $R$ and $\nu$ it must be **solved iteratively** for $u^*$ (Q1).`],
         ['para', R`**Velocity defect form.** Subtract (6.8) from (6.9). The constant 5.5 cancels and the logs combine:`],
         ['disp', [ R`\frac{u_{max}}{u^*} - \frac{\bar u}{u^*} = 2.5\ln\frac{Ru^*}{\nu} - 2.5\ln\frac{yu^*}{\nu} = 2.5\ln\!\left(\frac{Ru^*/\nu}{yu^*/\nu}\right) = 2.5\ln\frac{R}{y}` ]],
         ['disp', [ R`\frac{u_{max} - \bar u}{u^*} = -2.5\ln\frac{y}{R} = -2.5\ln\!\left(1 - \frac{r}{R}\right) \tag{6.10}` ]],
@@ -166,10 +167,7 @@
           R`Strictly, the log law does not apply right out to the centreline. The lecture notes say that near the centre the profile depends on the flow conditions (the outer region of the figure). Using (6.9) and (6.10) at $y = R$ is an **approximation**. In a pipe the departure from the log law at the centre is small (a few per cent of $u_{max}$), which is why the course uses (6.9) to get $u^*$ from a centreline measurement (Q1).`
         ]],
         ['eq', [
-          ['Viscous sublayer (yu*/ν < 5) (6.7)', R`\frac{\bar u}{u^*} = \frac{y u^*}{\nu}`, '[–]', 'τ ≈ τw constant and τw = μ dū/dy; eddies must shrink at the impermeable wall.'],
           ['Log law (30 < yu*/ν < 1000) (6.8)', R`\frac{\bar u}{u^*} = 2.5\ln\!\left(\frac{yu^*}{\nu}\right) + 5.5 = 5.75\log_{10}\!\left(\frac{yu^*}{\nu}\right) + 5.5`, '[–]', 'A = 2.5 = 1/κ (von Kármán constant κ = 0.4), B = 5.5 (Nikuradse).'],
-          ['Log law at the centreline (6.9)', R`\frac{u_{max}}{u^*} = 2.5\ln\!\left(\frac{Ru^*}{\nu}\right) + 5.5`, '[–]', 'Put y = R (an approximation — see Note). Solve iteratively for u*.'],
-          ['Velocity defect form (6.10)', R`\frac{u_{max} - \bar u}{u^*} = -2.5\ln\frac{y}{R} = -2.5\ln\!\left(1 - \frac{r}{R}\right)`, '[–]', '(6.9) minus (6.8); independent of ν.'],
           ['Fully rough wall (6.11)', R`\frac{\bar u}{u^*} = 5.75\log_{10}\frac{y}{e} + 8.48`, '[–]', 'eu*/ν > 70; e = equivalent sand-grain roughness height. Same slope as smooth.']
         ]],
         ['para', R`**Rough walls.** $e$ is the **equivalent sand-grain roughness height**: the size of Nikuradse's uniform sand grains that would give the same friction as the real surface. What matters is how $e$ compares with the sublayer thickness, measured by the **roughness Reynolds number** $eu^*/\nu$:`],
@@ -342,7 +340,7 @@
           ['m', R`\text{(a) } \frac{eu^*}{\nu} = \frac{10^{-3}\times0.1}{10^{-6}} = 100 > 70 \;\Rightarrow\; \text{fully rough}`],
           ['m', R`\frac{0.025\times10^{-3}\times0.1}{10^{-6}} = 2.5 < 5 \;\Rightarrow\; \text{smooth}`],
           ['m', R`\text{(b) } 5 < \frac{eu^*}{\nu} < 70 \;\Rightarrow\; \frac{5\nu}{u^*} < e < \frac{70\nu}{u^*}:\quad 0.05\ \text{mm} < e < 0.7\ \text{mm}`],
-          ['t', R`(c) First check the region: $y^+ = 0.005\times0.1/10^{-6} = 500$, which is in the log region. Rough wall, Eq. (6.11):`],
+          ['t', R`(c) First check which law applies. (6.11) is valid **only for a fully rough wall**, so check $eu^*/\nu > 70$ first: from (a) it is 100, so the 1 mm wall is fully rough and (6.11) may be used. (For a transitionally rough wall, $5 < eu^*/\nu < 70$, neither (6.8) nor (6.11) holds exactly: both viscosity and roughness matter, which is the Colebrook regime of topic 7.) Then check the point is in the log region and above the roughness: $y^+ = 0.005\times0.1/10^{-6} = 500$ (between 30 and 1000) and $y/e = 5$. Rough wall, Eq. (6.11):`],
           ['m', R`\frac{\bar u}{u^*} = 5.75\log_{10}\frac{y}{e} + 8.48 = 5.75\log_{10}5 + 8.48 = 4.02 + 8.48 = 12.50 \;\Rightarrow\; \bar u = 1.25\ \text{m/s}`],
           ['m', R`\text{smooth, Eq. (6.8): } \frac{\bar u}{u^*} = 2.5\ln 500 + 5.5 = 21.04 \;\Rightarrow\; \bar u = 2.10\ \text{m/s}`],
           ['t', R`For the same wall stress, the rough wall gives a much lower velocity: its log line has the same slope but is shifted down. Put the other way round, a rough pipe needs a far higher $\tau_w$ (and pressure gradient) to carry the same flow. That is why roughness matters so much in turbulent flow (Moody chart, topic 7), while for the 0.025 mm wall the roughness is buried in the 0.05 mm sublayer and has no effect.`]

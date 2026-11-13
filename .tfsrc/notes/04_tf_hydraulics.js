@@ -57,7 +57,8 @@
         ]],
         ['para', R`The velocity profiles differ. **Inviscid** (potential) flow would be uniform. **Laminar** flow is a parabola, with $u_m = \tfrac12 u_{max}$ (derived in §4.4). **Turbulent** flow is much blunter. It is often approximated by the **1/7th power law**, where $y = R - r$ is the distance from the wall:`],
         ['disp', [ R`\frac{u}{u_{max}} = \left(\frac{y}{R}\right)^{1/7} \;\Rightarrow\; u_m \approx 0.82\,u_{max}\ \ (\text{turbulent})`, R`u_m = 0.5\,u_{max}\ \ (\text{laminar parabola})` ]],
-        ['svg', 'tf_profiles_h', 'Same flow rate, three profiles: inviscid (uniform), laminar (parabola, u_m = ½u_max), turbulent (1/7 power law, u_m ≈ 0.8u_max).'],
+        ['para', R`**0.82 or 0.8?** Averaging the 1/7 law over the cross-section gives $u_m/u_{max} = \frac{2n^2}{(n+1)(2n+1)} = \frac{2(49)}{(8)(15)} = 0.817$ with $n = 7$. The course notes and solutions round this to $u_m = 0.8\,u_{max}$; both are the same result, and either is accepted. These notes write $\approx 0.82$ ($\approx 0.8$).`],
+        ['svg', 'tf_profiles_h', 'Same flow rate, three profiles: inviscid (uniform), laminar (parabola, u_m = ½u_max), turbulent (1/7 power law, u_m ≈ 0.82u_max, rounded to 0.8 in the course).'],
       ]
     },
     {
@@ -68,7 +69,7 @@
           R`**Sign convention.** $x$ runs along the pipe **in the flow direction**, and forces are **positive in the flow direction**. $\theta$ is the angle of the pipe above the horizontal, with **$\theta > 0$ when the flow goes uphill**.`,
           R`**Pressure** must fall along the flow ($dp/dx < 0$) for the net pressure force to push the fluid forward. **Wall friction** always acts against the flow. **Gravity's** component along the pipe, $\rho g\sin\theta$ per unit volume, points down-slope. It opposes the flow when $\theta > 0$ and helps it when $\theta < 0$.`
         ]],
-        ['svg', 'tf_pipe_incline_h', 'Force balance on a slice δl of an uphill pipe: the net pressure force (on the cross-section) balances wall friction τ_w (on the wall area) plus the down-slope weight component ρg sinθ per unit volume.'],
+        ['svg', 'tf_pipe_incline_h', 'Force balance on a slice δl of an uphill pipe: the net pressure force (on the cross-section) balances wall friction τ_w (on the wall area) plus the down-slope weight component per unit volume, density × g × sinθ (ρg sinθ).'],
         ['deriv', 'Derivation — pressure gradient in a pipe', [
           ['t', R`**Pressure force** (net, flow direction positive), acting on the cross-section $\tfrac{\pi}{4}D^2$. Upstream face minus downstream face:`],
           ['m', R`p\,\tfrac{\pi}{4}D^2 - \left(p + \frac{dp}{dx}\delta l\right)\tfrac{\pi}{4}D^2 = -\frac{dp}{dx}\,\delta l\,\tfrac{\pi}{4}D^2 \quad (> 0 \text{ since } dp/dx < 0)`],
@@ -99,7 +100,7 @@
           ['Same, in terms of Darcy f', R`-\Delta p = f\,\frac{L}{D}\,\tfrac12\rho u_m^2`, '[Pa]', 'Substitute C_f = f/4 into the line above.'],
           ['Pump power', R`P = Q\,\Delta p = u_m\tfrac{\pi}{4}D^2\,\Delta p`, '[W]', 'Power to overcome the pressure drop.']
         ]],
-        ['svg', 'tf_cf_re_h', 'The smooth-pipe flow curve: C_f = 16/Re (laminar, Re < 2000), transition band 2000–4000, then turbulent; Blasius 0.079 Re^-1/4 (dashed) fits 4000 < Re < 10⁵.'],
+        ['svg', 'tf_cf_re_h', 'The smooth-pipe flow curve: C_f = 16/Re (laminar, Re < 2000), transition band 2000–4000, then turbulent; Blasius 0.079 Re^-1/4 (dashed) fits 4000 < Re < 10⁵. Inside the 2000–4000 band C_f is unpredictable (the flow flips between laminar and turbulent), so do not use either law there; above 10⁵ Blasius under-predicts, so use the Moody diagram.'],
         ['para', R`**Where 16/Re comes from.** For laminar flow the profile can be found exactly. Topic 5 does this in full; the short version below is enough to use it here. Take a cylinder of fluid of radius $r$ on the centreline of a horizontal pipe.`],
         ['svg', 'tf_poiseuille_pipe', 'Cylindrical control volume of radius r: the pressure difference on its ends balances the shear stress τ on its curved surface.'],
         ['deriv', 'Derivation — laminar profile and C_f = 16/Re', [
@@ -247,9 +248,9 @@
         ['list', R`**Traps** to check before you hand in an answer:`, false, [
           R`**SI units first**: mm → m, L/h → m³/s (÷ 1000 × 3600), poise → Pa s (1 P = 0.1 Pa s).`,
           R`**Diameter, not radius**, in $Re$ and in $4/D$ (Q3 gives a radius).`,
-          R`**$u_m = Q/A$** is the mean velocity. Laminar $u_m = \tfrac12u_{max}$ (Q7); turbulent $u_m \approx 0.8u_{max}$.`,
+          R`**$u_m = Q/A$** is the mean velocity. Laminar $u_m = \tfrac12u_{max}$ (Q7); turbulent $u_m \approx 0.82u_{max}$ (the course rounds to $0.8u_{max}$).`,
           R`**Which friction number?** $\tau_w = \tfrac12\rho u_m^2C_f = \tfrac18\rho u_m^2 f$. Mixing them up gives an error of 4.`,
-          R`**Check $Re$** after a regime guess (Q9). Laminar below 2000; Blasius only for 4000 to $10^5$; 2000 to 4000 is transitional and unreliable.`,
+          R`**Check $Re$** after a regime guess (Q9). Laminar below 2000; Blasius only for 4000 to $10^5$; 2000 to 4000 is transitional and unreliable. Above $10^5$ (smooth or rough) go to the Moody diagram.`,
           R`**Inclined pipe**: add $\rho g\sin\theta$, with $\theta$ positive uphill in the flow direction.`,
           R`**Non-circular duct**: $D_H$ in $Re$, $C_f$ and $4/D_H$, but the actual area in $u_m = Q/A$.`,
           R`**Power**: $P = Q\Delta p$. Say whether it is per pump or the total.`
@@ -343,7 +344,7 @@
           ['t', R`Wind speed rises linearly from 0 at the ground to 10 m/s at 20 m. A chimney of diameter 0.1 m rises 10 m. (a) Why does smoke go up? (b) Why ignore hydrostatics? (c) Why does wind speed vary with height? (d) What is the pressure difference from fireplace to top? (e) What is the mean air speed with major loss only? [15 Pa; 3.1 m/s]`],
           ['svg', 'tf_chimney_h', 'Still air in the room is at p₀; wind u_w over the chimney top lowers the pressure there to p < p₀, driving the draught up the flue.'],
           ['ans'],
-          ['t', R`(a) The still room air is at stagnation pressure $p_0$. Where wind moves over the chimney top the pressure is lower. That difference drives the draught. (b) The hydrostatic gradient inside the chimney is balanced by the one outside, so the net effect is zero. (c) No slip at the ground creates an **atmospheric boundary layer**.`],
+          ['t', R`(a) The still room air is at stagnation pressure $p_0$. Where wind moves over the chimney top the pressure is lower. That difference drives the draught. (b) Hydrostatics is not negligible on its own but it **cancels**. Air density is about 1.2 kg/m³, so over the 10 m height $\rho g h = 1.2(9.81)(10) \approx 118$ Pa, which is far bigger than the 15 Pa found in (d). But the still air outside the chimney has the same density and the same height, so the pressure falls by the same 118 Pa outside as inside. The difference that drives the flow is only the wind term. (This assumes the chimney gas is at room temperature; hot flue gas is lighter, which adds a buoyant "stack effect" not asked for here.) Saying only "negligible" would lose the mark: say it is equal inside and outside. (c) No slip at the ground creates an **atmospheric boundary layer**.`],
           ['m', R`\text{(d) } u_w = \frac{10}{20}\times10 = 5\ \text{m/s at 10 m};\quad p_0 = p + \tfrac12\rho u_w^2`],
           ['m', R`\Rightarrow \Delta p = \tfrac12(1.2)(5)^2 = 15\ \text{Pa}`],
           ['m', R`\text{(e) guess laminar: } u = \frac{\Delta p D^2}{32\mu L} = \frac{15(0.1)^2}{32(1.7\times10^{-5})(10)} = 27.5\ \text{m/s}`],

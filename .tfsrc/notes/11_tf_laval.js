@@ -18,7 +18,7 @@
     {
       num: '11.1', title: 'How to Make a Supersonic Flow',
       blocks: [
-        ['list', R`Recap from Topic 10:`, false, [
+        ['list', R`Recap from Topic 10 (Converging Nozzles):`, false, [
           R`Subsonic flow speeds up in a **converging** duct; supersonic flow speeds up in a **diverging** one. As speed rises, pressure falls.`,
           R`$M = 1$ only at the **minimum-area** section ($dA = 0$). When $M = 1$ there the nozzle is **choked**: no information travels upstream, so the mass flow can't increase any more.`
         ]],
@@ -29,7 +29,8 @@
           R`The lecture slides write the "end conditions" as $p_e$ and use it for the back pressure. Inside the nozzle the two are equal only when the exit is subsonic or matched; for an over- or under-expanded jet the exit-plane pressure is $p_3 \neq p_b$. That is why these notes keep $p_b$ and $p_e$ separate.`
         ]],
         ['para', R`**Isentropic relations (Topic 9).** Wherever there is no shock, the flow is isentropic with the same $p_0$ and $T_0$, so at every station:`],
-        ['disp', [ R`\boxed{\frac{T_0}{T} = 1 + \frac{\gamma-1}{2}M^2} \tag{11.1}`, R`\boxed{\frac{p_0}{p} = \left(1 + \frac{\gamma-1}{2}M^2\right)^{\gamma/(\gamma-1)}}`, R`\boxed{\frac{\rho_0}{\rho} = \left(1 + \frac{\gamma-1}{2}M^2\right)^{1/(\gamma-1)}}` ]],
+        ['disp', [ R`\boxed{\begin{aligned} \frac{T_0}{T} &= 1 + \frac{\gamma-1}{2}M^2 \\[4pt] \frac{p_0}{p} &= \left(\frac{T_0}{T}\right)^{\gamma/(\gamma-1)} \\[4pt] \frac{\rho_0}{\rho} &= \left(\frac{T_0}{T}\right)^{1/(\gamma-1)} \end{aligned}} \tag{11.1}` ]],
+        ['para', R`Substituting the first line into the other two gives the explicit forms $\dfrac{p_0}{p} = \left(1 + \dfrac{\gamma-1}{2}M^2\right)^{\gamma/(\gamma-1)}$ and $\dfrac{\rho_0}{\rho} = \left(1 + \dfrac{\gamma-1}{2}M^2\right)^{1/(\gamma-1)}$. Their versions for air and for $\gamma = 1.2$ are in the table below.`],
         ['eq', [
           ['(11.1) for air', R`\frac{T_0}{T} = 1 + 0.2M^2,\quad \frac{p_0}{p} = (1 + 0.2M^2)^{3.5}`, '[–]', 'γ = 1.4: (γ−1)/2 = 0.2, γ/(γ−1) = 3.5.'],
           ['(11.1) for γ = 1.2', R`\frac{T_0}{T} = 1 + 0.1M^2,\quad \frac{p_0}{p} = (1 + 0.1M^2)^{6}`, '[–]', 'Rocket gas in Example 2: (γ−1)/2 = 0.1, γ/(γ−1) = 6.'],
@@ -42,7 +43,7 @@
           ['m', R`\dot m = \frac{p}{RT}\,A\,M\sqrt{\gamma RT} = pAM\sqrt{\frac{\gamma}{RT}}`],
           ['t', R`To write it with reservoir values, use $\rho a = \sqrt{\gamma p\rho}$ and the isentropic link $\rho/\rho_0 = (p/p_0)^{1/\gamma}$, with $\rho_0 = p_0/RT_0$:`],
           ['m', R`\rho a = \left[\gamma\rho_0p_0\left(\frac{p}{p_0}\right)\left(\frac{p}{p_0}\right)^{1/\gamma}\right]^{1/2} = \left[\frac{\gamma p_0^2}{RT_0}\left(\frac{p}{p_0}\right)^{\frac{\gamma+1}{\gamma}}\right]^{1/2}`],
-          ['t', R`So $\dot m = AM\rho a$ gives the lecture's form (11.2). Putting $M = 1$, $p/p_0 = (2/(\gamma+1))^{\gamma/(\gamma-1)}$ gives the choked (maximum) flow (11.3) of Topic 10.`]
+          ['t', R`So $\dot m = AM\rho a$ gives the lecture's form (11.2). Putting $M = 1$, $p/p_0 = (2/(\gamma+1))^{\gamma/(\gamma-1)}$ gives the choked (maximum) flow (11.3), $\dot m_{max} = 0.0404\,A_tp_0/\sqrt{T_0}$ for air. (This is the same result as (10.4) in Topic 10, Converging Nozzles, restated here so you don't need to look it up.)`]
         ]],
         ['disp', [ R`\boxed{\dot m = pAM\sqrt{\frac{\gamma}{RT}} = AM\left[\frac{\gamma p_0^2}{RT_0}\left(\frac{p}{p_0}\right)^{(\gamma+1)/\gamma}\right]^{1/2}} \tag{11.2}` ]],
         ['disp', [ R`\boxed{\dot m_{max} = \left[\frac{\gamma}{R}\left(\frac{2}{\gamma+1}\right)^{(\gamma+1)/(\gamma-1)}\right]^{1/2}\frac{A_tp_0}{\sqrt{T_0}} = 0.0404\,\frac{A_tp_0}{\sqrt{T_0}}\ \ \text{(air)}} \tag{11.3}` ]],
@@ -51,7 +52,7 @@
           ['m', R`\dot m = \sqrt{\frac{\gamma}{RT_0}}\;p_0\,A\,M\left(1 + \frac{\gamma-1}{2}M^2\right)^{-\frac{\gamma+1}{2(\gamma-1)}}`],
           ['t', R`Write this at a general section ($A$, $M$) and at the sonic section ($A^*$, $M = 1$), then divide. Everything except area and Mach number cancels:`],
           ['m', R`\frac{A}{A^*} = \frac{1}{M}\left[\frac{1 + \frac{\gamma-1}{2}M^2}{\frac{\gamma+1}{2}}\right]^{\frac{\gamma+1}{2(\gamma-1)}}`],
-          ['t', R`**Why the minimum is at $M = 1$:** from Topic 10, $\dfrac{dA}{A} = (M^2 - 1)\dfrac{du}{u}$. With the flow accelerating ($du > 0$), $dA < 0$ while $M < 1$ and $dA > 0$ once $M > 1$, so the area passes through a minimum exactly where $M = 1$. The curve $A/A^*(M)$ below has that minimum, $A/A^* = 1$.`]
+          ['t', R`**Why the minimum is at $M = 1$:** from the momentum and continuity equations ((10.2) in Topic 10, Converging Nozzles), $\dfrac{dA}{A} = (M^2 - 1)\dfrac{du}{u}$. With the flow accelerating ($du > 0$), $dA < 0$ while $M < 1$ and $dA > 0$ once $M > 1$, so the area passes through a minimum exactly where $M = 1$. The curve $A/A^*(M)$ below has that minimum, $A/A^* = 1$.`]
         ]],
         ['disp', [ R`\boxed{\frac{A}{A^*} = \frac{1}{M}\left[\frac{2}{\gamma+1}\left(1 + \frac{\gamma-1}{2}M^2\right)\right]^{n}} \tag{11.4}`, R`\boxed{n = \frac{\gamma+1}{2(\gamma-1)}\ \ (= 3\ \text{air},\ 5.5\ \text{for}\ \gamma = 1.2)}` ]],
         ['svg', 'tf_area_mach', 'A/A* against M. Every A/A* > 1 has two roots: a subsonic one and a supersonic one. The converging part always uses the subsonic root; in the diverging part the operating regime (back pressure) decides.'],
@@ -59,9 +60,7 @@
           ['Area–Mach relation', R`\frac{A}{A^*} = \frac{1}{M}\left[\frac{2}{\gamma+1}\left(1 + \frac{\gamma-1}{2}M^2\right)\right]^{n}`, '[–]', 'Exponent n = (γ+1)/(2(γ−1)) = 3 for air, 5.5 for γ = 1.2. A* = area where M = 1 (the throat, when choked). Two solutions for each A/A* > 1: one subsonic, one supersonic.'],
           ['Area–Mach, air', R`\frac{A}{A^*} = \frac{1}{M}\left(\frac{1 + 0.2M^2}{1.2}\right)^{3}`, '[–]', 'γ = 1.4.'],
           ['Area–Mach, γ = 1.2', R`\frac{A}{A^*} = \frac{1}{M}\left(\frac{1 + 0.1M^2}{1.1}\right)^{5.5}`, '[–]', 'Rocket gas in Example 2.'],
-          ['Area ratio from states', R`\frac{A_e}{A_t} = \frac{\rho_t u_t}{\rho_e u_e} = \frac{p_t}{p_e}\,\frac{T_e}{T_t}\,\frac{u_t}{u_e}`, '[–]', 'Mass conservation with ρ = p/RT.'],
-          ['Mass flow at any section', R`\dot m = pAM\sqrt{\gamma/RT}`, '[kg/s]', 'Eq. (11.2); works for M ≠ 1 too.'],
-          ['Choked mass flow', R`\dot m_{max} = 0.0404\,A_tp_0/\sqrt{T_0}`, '[kg/s]', 'Air, SI units. Eq. (11.3).']
+          ['Area ratio from states', R`\frac{A_e}{A_t} = \frac{\rho_t u_t}{\rho_e u_e} = \frac{p_t}{p_e}\,\frac{T_e}{T_t}\,\frac{u_t}{u_e}`, '[–]', 'Mass conservation with ρ = p/RT. (Mass flow (11.2) and choked flow (11.3) are boxed above.)']
         ]],
         ['warn', 'When to use', [
           R`**Solving the area–Mach relation for $M$.** It can't be rearranged for $M$, so: (i) read the table below and interpolate; (ii) bisect on a calculator/spreadsheet — for the subsonic root search $0 < M < 1$, for the supersonic root $M > 1$; or (iii) iterate. Always check the root by putting it back into (11.4).`,
@@ -196,14 +195,15 @@
           R`**Q5** is question 5 of the course's compressible-flow problem sheet; Q1–Q3 (converging nozzles) are in Topic 10 and Q4, Q6–Q8 (shocks, including the shock in a C–D nozzle) in Topic 12. Questions **E1–E3** are extra practice written for these notes (not from the course sheet), covering the regimes, off-design thrust and shock location.`
         ]],
         ['ex', 'Q5 — supersonic wind tunnel', [
-          ['t', R`A working section of 600 cm² at $M = 2.5$ downstream of a C–D nozzle; $p_0 = 1\times10^5$ Pa, $T_0 = 18$ °C. Find (a) the working-section static pressure, (b) $\dot m$, (c) the throat area. [5850 Pa; 5.4 kg/s; 228 cm²]`],
+          ['t', R`A working section of 600 cm² at $M = 2.5$ downstream of a C–D nozzle; $p_0 = 1\times10^5$ Pa, $T_0 = 18$ °C. Find (a) the working-section static pressure, (b) $\dot m$, (c) the throat area.`],
           ['svg', 'tf_wind_tunnel', 'Supersonic wind tunnel: reservoir → choked throat → working section at M = 2.5 → diffuser. Given values marked; unknowns shown as "?".'],
           ['ans'],
           ['t', R`Supersonic in the working section, so there are no shocks upstream and the throat is choked ($M_t = 1$). $T_0 = 291$ K.`],
           ['m', R`\text{(a) } p = \frac{10^5}{(1 + 0.2\times2.5^2)^{3.5}} = 5850\ \text{Pa} \qquad T = \frac{291}{1 + 0.2\times6.25} = 129\ \text{K}`],
           ['m', R`\text{(b) } \dot m = pAM\sqrt{\frac{\gamma}{RT}} = 5850\times0.06\times2.5\sqrt{\frac{1.4}{287\times129}} = 5.4\ \text{kg/s}`],
           ['m', R`\text{(c) } p_t = 0.528\times10^5 = 5.28\times10^4\ \text{Pa},\ T_t = 0.833\times291 = 243\ \text{K} \Rightarrow A_t = \frac{\dot m}{p_t\sqrt{\gamma/RT_t}} = 228\ \text{cm}^2`],
-          ['t', R`Check: $A/A^* = \frac{1}{2.5}\left(\frac{1 + 0.2\times6.25}{1.2}\right)^3 = 2.64$, and $600/2.64 = 228$ cm² ✓.`]
+          ['t', R`Check: $A/A^* = \frac{1}{2.5}\left(\frac{1 + 0.2\times6.25}{1.2}\right)^3 = 2.64$, and $600/2.64 = 228$ cm² ✓.`],
+          ['t', R`**Answers:** (a) 5850 Pa; (b) 5.4 kg/s; (c) 228 cm². (The course sheet prints these with the question; here they are moved to the end so you can attempt it cold.)`]
         ]],
         ['ex', 'E1 — is it choked? An unchoked C–D nozzle (venturi)', [
           ['t', R`Air from $p_0 = 200$ kPa, $T_0 = 300$ K flows through a C–D nozzle with $A_t = 10$ cm² and $A_e/A_t = 2.0$ into a back pressure of 190 kPa. (a) Is the throat choked? (b) Find $M_e$ and $M_t$. (c) Find $p_t$ and $\dot m$.`],

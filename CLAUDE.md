@@ -59,7 +59,17 @@ and sets `<subj>_completed` = ISO date → green "Completed" badges on Today/Pro
 - Sync: a snapshot of every non-`acct_*` localStorage key is upserted to `progress(user_id, data, updated_at)`,
   debounced 4 s after any write (Storage.prototype is patched in `_acctInit`); newest copy wins on load.
   Sign-out pushes then clears the browser. `profiles.completed` (e.g. `{esa}`) is applied once per account.
-- Admin (profiles.is_admin): "Pupils dashboard" in the account panel lists every pupil's coverage, tests, last active.
+- Owner console (profiles.is_admin): account panel → "Owner console · accounts & access". Lists every account's
+  coverage/tests/last active, plus per-account controls: suspend/restore, subjects (esa/tf), access end date,
+  reset progress, remove account (deletes auth user + cascade). Invites (email + subjects + end date) and the
+  sign-up mode (`app_settings.signup_mode` = invite | open).
+- Enforcement is server-side: `check_invite` trigger blocks un-invited sign-ups; `account_ok()` gates progress
+  writes in RLS; `admin_*` RPCs are security-definer and check `is_admin()`. `signup_check` RPC gives the form a
+  readable reason (Supabase hides trigger messages). Client mirrors it in `_acctBlocked()` / `_subjAllowed()`.
+- `requireLogin` (config.json, default true when configured): full-screen sign-in gate until signed in and allowed.
+  NB: notes still ship inside the public index.html, so restrictions stop casual use, not a determined copier.
+- Test locally: put `{"url":"http://127.0.0.1:8125","anonKey":"test"}` in config.json, `python3 tools/review_build.py acct`,
+  delete config.json again, run the mock (`supabase/mock_supabase.py`), open `/.review/acct/`.
 
 ## Review tooling
 - `python3 tools/review_build.py <name>` → private build `.review/<name>/index.html` (doesn't touch .src or index.html).

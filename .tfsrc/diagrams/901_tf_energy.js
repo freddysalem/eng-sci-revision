@@ -6,10 +6,10 @@
           let s = pgon([[x, yb], [x + 70, yb], [x + 70 + off, yb - 70], [x + off, yb - 70]], fillC, 'ink', 1.6);
           if (off) {
             s += A(x + off + 18, yb - 80, x + off + 54, yb - 80, 'terr', 1.8) + A(x + 52, yb + 9, x + 16, yb + 9, 'terr', 1.8) + V(x + off + 58, yb - 76, 'τ', { c: 'terr', fs: 14 });
-            s += L(x, yb, x, yb - 46, 'mut', 1.1, '4 3');
+            s += L(x, yb, x, yb - 46, 'mut', 1.5, '4 3');
             const a = Math.atan(off / 70), r = 34;
-            s += P('M ' + x + ' ' + (yb - r) + ' A ' + r + ' ' + r + ' 0 0 1 ' + (x + r * Math.sin(a)).toFixed(1) + ' ' + (yb - r * Math.cos(a)).toFixed(1), 'gold', 2.4);
-            s += V(x + 5 + r * Math.sin(a / 2) * 0.55, yb - r - 6, lab, { c: 'gold', fs: 15, w: 600 });
+            s += P('M ' + x + ' ' + (yb - r) + ' A ' + r + ' ' + r + ' 0 0 1 ' + (x + r * Math.sin(a)).toFixed(1) + ' ' + (yb - r * Math.cos(a)).toFixed(1), 'gold', 3.2);
+            s += V(x + 5 + r * Math.sin(a / 2) * 0.55, yb - r - 6, lab, { c: 'gold', fs: 16, w: 700 });
           }
           return s;
         };
@@ -17,8 +17,8 @@
         s += N(125, 28, 't = 0', { a: 'middle', fs: 12 }) + N(270, 28, 't₁', { a: 'middle', fs: 12 }) + N(440, 28, 't₂ > t₁', { a: 'middle', fs: 12 });
         s += blk(90, 136, 0, 'paper') + A(172, 100, 208, 100, 'mut', 1.4) + blk(222, 136, 26, 'paper', 'γ') + A(330, 100, 366, 100, 'mut', 1.4) + blk(390, 136, 26, 'paper', 'γ');
         s += blk(90, 280, 0, 'tint') + A(172, 244, 208, 244, 'mut', 1.4) + blk(222, 280, 26, 'tint', 'γ₁') + A(330, 244, 366, 244, 'mut', 1.4) + blk(390, 280, 70, 'tint', 'γ₂');
-        s += N(125, 160, 'unloaded', { a: 'middle', fs: 11.5 }) + N(270, 160, 'stress applied', { a: 'middle', fs: 11.5 }) + N(450, 160, 'same strain γ', { a: 'middle', fs: 11.5 });
-        s += N(125, 304, 'unloaded', { a: 'middle', fs: 11.5 }) + N(270, 304, 'stress applied', { a: 'middle', fs: 11.5 }) + N(470, 304, 'γ₂ > γ₁: still deforming', { a: 'middle', fs: 11.5 });
+        s += N(125, 160, 'unloaded', { a: 'middle', fs: 12.5 }) + N(270, 160, 'stress applied', { a: 'middle', fs: 12.5 }) + N(450, 160, 'same strain γ', { a: 'middle', fs: 12.5 });
+        s += N(125, 304, 'unloaded', { a: 'middle', fs: 12.5 }) + N(270, 304, 'stress applied', { a: 'middle', fs: 12.5 }) + N(470, 304, 'γ₂ > γ₁: still deforming', { a: 'middle', fs: 12.5 });
         s += T(640, 84, 'stress ∝ strain', { fs: 13, c: 'mtx', a: 'middle' }) + V(640, 116, 'τ ∝ γ', { a: 'middle', fs: 22 });
         s += T(640, 228, 'stress ∝ strain rate', { fs: 13, c: 'tf', a: 'middle' }) + V(640, 262, 'τ ∝ dγ/dt', { a: 'middle', fs: 22, c: 'tf' });
         return W(740, 318, s);
@@ -129,7 +129,7 @@
         const x0 = 60, y0 = 282, d = [Math.cos(Math.PI / 6), -Math.sin(Math.PI / 6)], n = [-0.5, -0.866];
         const at = (sx, k) => [x0 + sx * d[0] + k * n[0], y0 + sx * d[1] + k * n[1]];
         const f = (p) => [p[0].toFixed(1), p[1].toFixed(1)];
-        let s = L(x0, y0, x0 + 470 * d[0], y0 + 470 * d[1], 'ink', 2.4) + N(x0 + 474 * d[0] + 6, y0 + 474 * d[1] + 4, 'line of roof', { fs: 11.5 });
+        let s = L(x0, y0, x0 + 470 * d[0], y0 + 470 * d[1], 'ink', 2.4) + N(x0 + 474 * d[0] + 6, y0 + 474 * d[1] + 4, 'line of roof', { fs: 13 });
         s += pgon([at(150, 2), at(330, 2), at(330, 16), at(150, 16)], 'terr', 'ink', 1.2);
         s += L(x0, y0, x0 + 100, y0, 'mut', 1.2) + P('M ' + (x0 + 56) + ' ' + y0 + ' A 56 56 0 0 0 ' + (x0 + 56 * d[0]).toFixed(1) + ' ' + (y0 + 56 * d[1]).toFixed(1), 'ink', 1.3) + V(x0 + 64, y0 - 9, 'θ', { fs: 15 });
         // wind along the roof
@@ -140,7 +140,7 @@
         const pn = f([c[0] + 84 * n[0], c[1] + 84 * n[1]]); s += A(cc[0], cc[1], pn[0], pn[1], 'terr', 2.4) + V(+pn[0] - 6, +pn[1] - 6, 'ΔpA (normal)', { c: 'terr', a: 'end', fs: 16 });
         s += A(cc[0], cc[1], cc[0], (c[1] + 84).toFixed(1), 'ink', 2) + V(c[0] + 8, c[1] + 100, 'mg = Atρ_t g', { fs: 16 });
         const mc = f([c[0] - 72.7 * n[0], c[1] - 72.7 * n[1]]); s += A(cc[0], cc[1], mc[0], mc[1], 'mut', 1.6) + V(+mc[0] + 6, +mc[1] + 14, 'mg cos θ', { c: 'mtx', fs: 15 });
-        const ms = f([c[0] - 42 * d[0], c[1] - 42 * d[1]]); s += A(cc[0], cc[1], ms[0], ms[1], 'mut', 1.6) + L(+ms[0] - 2, +ms[1] + 3, 176, 246, 'mut', 0.9, '3 3') + V(174, 260, 'mg sin θ', { c: 'mtx', fs: 15, a: 'end' });
+        const ms = f([c[0] - 42 * d[0], c[1] - 42 * d[1]]); s += A(cc[0], cc[1], ms[0], ms[1], 'mut', 1.6) + V(220, 160, 'mg sin θ', { c: 'mtx', fs: 15, a: 'end' });
         // pressures and tile label (kept clear of the roof line)
         s += T(24, 36, 'above the tile: p = p_a − ρu²/2', { fs: 14.5, c: 'tf' });
         s += T(372, 252, 'under the tile (still air): p = p_a', { fs: 14, c: 'mtx' });
@@ -151,7 +151,7 @@
 
       // ---- Pelton bucket: 50° marked on both limbs, sign convention shown ----
       D.tf_pelton = () => {
-        let s = R(205, 22, 210, 256, null, 'gold', 1.5, '5 4') + N(410, 16, 'control volume (moves with bucket)', { a: 'end', c: 'gold', fs: 11.5 });
+        let s = R(205, 22, 210, 256, null, 'gold', 1.5, '5 4') + N(410, 16, 'control volume (moves with bucket)', { a: 'end', c: 'gold', fs: 13 });
         s += P('M 60 150 L 304 150', 'tf', 16, null, null);
         s += P('M 300 150 C 336 142, 326 100, 292 90 L 238 26', 'tf', 13) + P('M 300 150 C 336 158, 326 200, 292 210 L 238 274', 'tf', 13);
         s += P('M 336 66 Q 296 108, 322 150 Q 296 192, 336 234', 'ink', 3.4);
@@ -159,8 +159,8 @@
         s += A(272, 66, 236, 24, 'ink', 2) + T(120, 44, 'ṁ/2 at v₁ − u', { serif: true, fs: 14 }) + A(272, 234, 236, 276, 'ink', 2) + T(120, 268, 'ṁ/2 at v₁ − u', { serif: true, fs: 14 });
         s += L(292, 90, 236, 90, 'mut', 1, '4 3') + P('M 262 90 A 30 30 0 0 1 273 67', 'gold', 1.6) + T(240, 82, '50°', { fs: 14, c: 'gold', a: 'end' });
         s += L(292, 210, 236, 210, 'mut', 1, '4 3') + P('M 262 210 A 30 30 0 0 0 273 233', 'gold', 1.6) + T(240, 228, '50°', { fs: 14, c: 'gold', a: 'end' });
-        s += A(345, 150, 440, 150, 'terr', 2.4) + V(448, 155, 'F', { c: 'terr' }) + N(448, 172, 'force on bucket', { fs: 11.5 });
-        s += A(40, 296, 96, 296, 'ink', 1.6) + T(102, 300, '+x (jet direction)', { fs: 11.5, c: 'mtx' });
+        s += A(345, 150, 440, 150, 'terr', 2.4) + V(448, 155, 'F', { c: 'terr' }) + N(448, 172, 'force on bucket', { fs: 13 });
+        s += A(40, 296, 96, 296, 'ink', 1.6) + T(102, 300, '+x (jet direction)', { fs: 13, c: 'mtx' });
         s += T(482, 56, 'turned 130° ⇒ leaves at 50° to −x', { fs: 14, c: 'mtx' });
         s += T(482, 94, 'in:  +ṁ(v₁ − u)', { fs: 14.5 }) + T(482, 120, 'out: 2 × (ṁ/2)(v₁ − u)(−cos 50°)', { fs: 14.5 });
         s += T(482, 200, 'ΣF on fluid = out − in', { fs: 14.5 }) + T(482, 226, 'F on bucket = in − out', { fs: 14.5, c: 'terr' }) + T(482, 252, '= ṁ(v₁ − u)(1 + cos 50°)', { fs: 14.5, c: 'terr' });
@@ -170,18 +170,18 @@
       // ---- SFEE control volume with the sign convention ----
       D.tf_sfee_cv = () => {
         let s = '';
-        s += L(30, 290, 690, 290, 'mut', 1.2, '6 4') + N(36, 284, 'datum z = 0', { fs: 11.5 });
+        s += L(30, 290, 690, 290, 'mut', 1.2, '6 4') + N(36, 284, 'datum z = 0', { fs: 13 });
         s += R(40, 186, 170, 40, 'tint', 'ink', 1.4) + R(480, 96, 180, 32, 'tint', 'ink', 1.4);
         s += P('M 210 186 L 260 120 L 450 90 L 480 96 L 480 128 L 450 140 L 380 250 L 260 250 L 210 226 Z', 'ink', 1.8, 'paper');
         s += T(330, 186, 'device', { a: 'middle', fs: 14, c: 'mtx' }) + T(330, 204, '(pump, turbine, nozzle…)', { a: 'middle', fs: 12, c: 'mtx' });
-        s += R(160, 66, 360, 216, null, 'gold', 1.5, '5 4') + N(164, 60, 'control volume', { a: 'start', c: 'gold', fs: 11.5 });
+        s += R(160, 66, 360, 216, null, 'gold', 1.5, '5 4') + N(164, 60, 'control volume', { a: 'start', c: 'gold', fs: 13 });
         s += A(56, 206, 140, 206, 'tf', 2.2) + A(520, 112, 610, 112, 'tf', 2.2);
         s += T(42, 154, '1 (in)', { fs: 14, w: 600 }) + T(42, 174, 'p₁, u₁, z₁, h₁', { fs: 14 }) + T(530, 62, '2 (out)', { fs: 14, w: 600 }) + T(530, 82, 'p₂, u₂, z₂, h₂', { fs: 14 });
         s += A2(30, 290, 30, 206, 'mut') + V(22, 252, 'z₁', { a: 'end', fs: 14 }) + A2(706, 290, 706, 112, 'mut') + V(714, 206, 'z₂', { fs: 14 });
         s += A(300, 20, 300, 86, 'terr', 2.2) + V(310, 34, 'Q̇ > 0 : heat INTO the fluid', { c: 'terr', fs: 15 });
         s += L(330, 250, 330, 300, 'ink', 4) + A(370, 318, 340, 282, 'vio', 2.2) + V(378, 322, 'Ẇ_s > 0 : shaft work done ON the fluid', { c: 'vio', fs: 15 });
         s += T(378, 342, '(pump/fan/compressor > 0, turbine < 0)', { fs: 13, c: 'mtx' });
-        s += T(530, 222, 'Δ( ) = ( )₂ − ( )₁', { fs: 15 }) + T(530, 246, '= out − in', { fs: 15 });
+        s += T(526, 222, 'Δ( ) = ( )₂ − ( )₁', { fs: 16, w: 600 }) + T(526, 248, '= out − in', { fs: 16, w: 600 });
         return W(740, 352, s);
       };
     

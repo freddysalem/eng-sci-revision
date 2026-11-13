@@ -75,7 +75,7 @@ def build(write=True):
         import json as _j
         c = _j.load(open(cfgp))
         a, b = t.index('  // <<ACCT_CFG>>'), t.index('  // <</ACCT_CFG>>') + len('  // <</ACCT_CFG>>')
-        t = t[:a] + '  // <<ACCT_CFG>>\n  _acctCfg() { return { url: ' + _j.dumps(c.get('url', '')) + ', key: ' + _j.dumps(c.get('anonKey', '')) + ' }; }\n  // <</ACCT_CFG>>' + t[b:]
+        t = t[:a] + '  // <<ACCT_CFG>>\n  _acctCfg() { return { url: ' + _j.dumps(c.get('url', '')) + ', key: ' + _j.dumps(c.get('anonKey', '')) + ', requireLogin: ' + ('false' if c.get('requireLogin') is False else 'true') + ' }; }\n  // <</ACCT_CFG>>' + t[b:]
     if not write:
         return code, t
     open(TPL, 'w', encoding='utf-8').write(t)

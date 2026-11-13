@@ -18,11 +18,11 @@
         const AR = 2.0, xt = 0.35;
         const Aof = (x) => x < xt ? 1 + 1.6 * Math.pow((xt - x) / xt, 2) : 1 + (AR - 1) * Math.pow((x - xt) / (1 - xt), 2);
         const pr = (m) => prg(m, g14);
-        const X = (x) => 66 + x * 380, Y = (p) => 400 - p * 250, yc = 72;
+        const X = (x) => 66 + x * 340, Y = (p) => 400 - p * 250, yc = 72;
         let s = pgon(fn((x) => [X(x), yc - 20 * Aof(x)], 0, 1, 60).concat(fn((x) => [X(x), yc + 20 * Aof(x)], 1, 0, 60)), 'tint')
           + poly(fn((x) => [X(x), yc - 20 * Aof(x)], 0, 1, 60), 'ink', 2) + poly(fn((x) => [X(x), yc + 20 * Aof(x)], 0, 1, 60), 'ink', 2) + cl(X(0) - 6, yc, X(1) + 10);
-        s += L(X(xt), 12, X(xt), 402, 'mut', 1, '6 4') + T(X(xt), 10, 'throat, A_t', { a: 'middle', fs: 14, c: 'mtx' }) + T(X(1), 10, 'exit, A_e = 2A_t', { a: 'middle', fs: 14, c: 'mtx' });
-        s += A(56, 402, 56, 136, 'ink', 1.3) + T(50, 132, 'p/p₀', { serif: true, fs: 13, a: 'end' }) + L(56, 402, 460, 402, 'ink', 1.3) + T(460, 418, 'x', { serif: true, fs: 13 });
+        s += L(X(xt), 12, X(xt), 402, 'mut', 1, '6 4') + T(X(xt), 12, 'throat, A_t', { a: 'middle', fs: 15, c: 'mtx' }) + T(X(1), 12, 'exit, A_e = 2A_t', { a: 'middle', fs: 15, c: 'mtx' });
+        s += A(56, 402, 56, 136, 'ink', 1.3) + T(50, 132, 'p/p₀', { serif: true, fs: 13, a: 'end' }) + L(56, 402, X(1) + 14, 402, 'ink', 1.3) + T(X(1) + 14, 418, 'x', { serif: true, fs: 13 });
         s += tick(56, Y(1), '1', true) + tick(56, Y(0.528), '0.528', true) + L(56, Y(0.528), X(xt), Y(0.528), 'mut', 1, '3 3');
         const curve = (f, x0, x1, c, w, dash) => poly(fn((x) => [X(x), Y(f(x))], x0, x1, 90), c, w, dash);
         // (a) unchoked venturi, (b) p_b = p2: just choked, subsonic both sides
@@ -33,18 +33,19 @@
         // (c) shock inside: p_b = 0.70 p0 -> shock at A_s/A_t = 1.51
         const As = 1.51, xs = xt + (1 - xt) * Math.sqrt((As - 1) / (AR - 1)), m1 = Msol(As, true), sk = nshock(m1);
         s += curve((x) => sk.r * pr(Msol(Aof(x) * sk.r, false)), xs, 1, 'terr', 2) + L(X(xs), Y(pr(m1)), X(xs), Y(pr(m1) * sk.p21), 'terr', 2.2);
-        s += T(X(xs) - 6, Y(0.53), 'normal shock', { a: 'end', fs: 13.5, c: 'terr' }) + T(X(xs) - 6, Y(0.53) + 16, 'A_s = 1.51A_t', { a: 'end', fs: 13.5, c: 'terr' }) + T(X(xs) - 6, Y(0.53) + 32, '(p_b = 0.70p₀)', { a: 'end', fs: 13.5, c: 'terr' });
+        s += T(X(0.04), Y(0.33), 'normal shock', { fs: 15, c: 'terr' }) + T(X(0.04), Y(0.33) + 17, 'A_s = 1.51A_t', { fs: 15, c: 'terr' }) + T(X(0.04), Y(0.33) + 34, '(p_b = 0.70p₀)', { fs: 15, c: 'terr' })
+          + L(X(0.04) + 128, Y(0.33) + 12, X(xs) - 3, Y(pr(m1) * (1 + sk.p21) / 2), 'terr', 1, '3 3');
         // (d) shock exactly at the exit: p_b = p4
         const me = Msol(AR, true), ske = nshock(me), p3 = pr(me), p4 = p3 * ske.p21, p2 = pr(Msol(AR, false));
         s += L(X(1), Y(p3), X(1), Y(p4), 'terr', 2.2);
         // outside the exit: under-expanded (fan, pressure falls to p_b) and over-expanded (oblique shocks, rises to p_b)
         s += L(X(1), Y(p3), X(1) + 18, Y(0.035), 'vio', 1.4, '3 3') + L(X(1), Y(p3), X(1) + 18, Y(0.30), 'ink', 1.4, '3 3');
-        const lab = (p, t, dy) => T(X(1) + 24, Y(p) + 5 + (dy || 0), t, { fs: 16, w: 600 });
-        s += lab(1, 'p₀', -2) + lab(p2, 'p₂ = 0.937p₀', 6) + lab(p4, 'p₄ = 0.513p₀') + lab(p3, 'p₃ = 0.094p₀');
-        const br = (pa, pb, t, c) => L(592, Y(pa) + 2, 592, Y(pb) - 2, col(c || 'mtx'), 2.6) + T(600, (Y(pa) + Y(pb)) / 2 + 6, t, { fs: 16, w: 600, c: c || 'mtx' });
+        const lab = (p, t, dy) => T(X(1) + 24, Y(p) + 6 + (dy || 0), t, { fs: 18, w: 600 });
+        s += T(X(1) + 10, Y(1) - 6, 'p_b = p₀: no flow', { fs: 18, w: 600, c: 'mtx' }) + lab(p2, 'p₂ = 0.937p₀', 6) + lab(p4, 'p₄ = 0.513p₀') + lab(p3, 'p₃ = 0.094p₀');
+        const br = (pa, pb, t, c) => L(574, Y(pa) + 2, 574, Y(pb) - 2, col(c || 'mtx'), 3) + T(583, (Y(pa) + Y(pb)) / 2 + 6, t, { fs: 18, w: 600, c: c || 'mtx' });
         s += br(1, p2, 'all subsonic', 'tf') + br(p2, p4, 'shock inside', 'terr') + br(p4, p3, 'over-expanded', 'ink') + br(p3, 0.0, 'under-expanded', 'vio');
-        s += T(592, Y(1) - 18, 'p_b in this band:', { fs: 15, c: 'ink' });
-        s += T(X(0.03), Y(0.06), 'design flow: exits at p₃', { fs: 14, c: 'ink' });
+        s += T(574, Y(1) - 28, 'p_b in this band:', { fs: 17, w: 600, c: 'ink' });
+        s += T(X(0.03), Y(0.06), 'design flow: exits at p₃', { fs: 15, c: 'ink' });
         return W(740, 426, s);
       };
 
