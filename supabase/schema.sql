@@ -165,3 +165,7 @@ begin
   return 'ok';
 end $$;
 grant execute on function public.signup_check(text, text) to anon, authenticated;
+
+
+-- v3 (owner-only admin, permanently invite-only) lives in supabase/admin.sql, which is gitignored
+-- because it contains the owner's email.
