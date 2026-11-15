@@ -98,7 +98,32 @@ def check(code):
     print(r.stdout.strip() or '', r.stderr.strip()[:2000])
     return r.returncode == 0
 
+
+def build_fbook():
+    """Formula Book (fbook/): refresh its equation + diagram library from the notes, its theme colours from the
+    template, and bump the version the site loads it with so browsers never show a stale copy."""
+    import hashlib
+    fb = os.path.join(ROOT, 'fbook')
+    r = subprocess.run(['node', os.path.join(ROOT, 'tools', 'fbook_extract.js'), ROOT], capture_output=True, text=True)
+    print('fbook:', (r.stderr or r.stdout).strip())
+    if r.returncode != 0:
+        sys.exit('fbook data extraction failed')
+    t = open(TPL, encoding='utf-8').read()
+    pre = (':root {', 'html[data-theme="dark"] {', 'html[data-theme="light"] {', ':root, html[data-theme="dark"] {')
+    rules = [l for l in t.split('\n') if l.strip().startswith(pre) and '--' in l and l.strip().endswith('}')]
+    light = [l.strip()[len('html[data-theme="light"]'):] for l in rules if l.strip().startswith('html[data-theme="light"]')]
+    open(os.path.join(fb, 'tokens.css'), 'w', encoding='utf-8').write('\n'.join(rules + ['.paper ' + l for l in light]) + '\n')
+    h = hashlib.sha1()
+    for f in ('index.html', 'data.js', 'tokens.css'):
+        h.update(open(os.path.join(fb, f), 'rb').read())
+    ver = h.hexdigest()[:10]
+    t2 = re.sub(r"_fbookVer\(\) \{ return '[^']*'; \}", "_fbookVer() { return '" + ver + "'; }", t, count=1)
+    if t2 != t:
+        open(TPL, 'w', encoding='utf-8').write(t2)
+    print('fbook: version', ver)
+
 if __name__ == '__main__':
     code = build()
+    build_fbook()
     if '--check' in sys.argv:
         sys.exit(0 if check(code) else 1)

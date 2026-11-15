@@ -76,3 +76,10 @@ and sets `<subj>_completed` = ISO date → green "Completed" badges on Today/Pro
 - `node tools/note_shots.mjs <topicKey> <outDir> [--build name] [--theme light]` → headless-Chrome slices of a fully
   expanded note (`index.html#review=<topicKey>` opens it with every section/solution open) + report.json of render errors.
 - Student/professor review loop briefs and outputs: `.tfsrc/_review/` (gitignored).
+
+## Thermofluids Formula Book (fbook/)
+- `fbook/index.html` is the build-your-own formula book, shown in the Thermofluids "Formula Book" tab via an iframe (`index.html#fbook` opens it directly).
+- `python3 tools/build_tf.py` regenerates `fbook/data.js` (equations + diagrams from `.tfsrc/notes` and `.tfsrc/diagrams`, via `tools/fbook_extract.js`), `fbook/tokens.css` (theme colours) and bumps `_fbookVer()` so browsers reload it. Equation ids are `topic_hash(source)`: new weeks just appear in the library; never renumber.
+- Books live in localStorage `tf_fbooks_v1` (written through `parent.localStorage`, so the account sync saves them per account); stars are shared with the notes via `eq_stars_v1`.
+- External libraries (pinned): KaTeX 0.16.11, MathLive 0.101.0 (custom-equation editor), html-to-image 1.11.11 + jsPDF 2.5.1 (PDF download, loaded on demand).
+- Preview: `.review/ui/fbook` is a symlink to `../../fbook`.
