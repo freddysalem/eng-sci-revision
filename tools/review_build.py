@@ -15,6 +15,8 @@ import build_tf, bundle
 name = (sys.argv[1:] or ['default'])[0]
 code, tpl = build_tf.build(write=False)
 ok = build_tf.check(code)
+# review builds are private previews for screenshots: never show the sign-in gate
+tpl = tpl.replace('requireLogin: true', 'requireLogin: false')
 s = open(bundle.INDEX, encoding='utf-8').read()
 head, _, tail = bundle._split(s)
 out_dir = os.path.join(build_tf.ROOT, '.review', name)

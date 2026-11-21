@@ -19,7 +19,7 @@ localStorage `app_subject` (`"esa"` | `"tf"`).
 - **Thermofluids** (`tf`): Resources reuses the Eng Sci A lecture-notes page (topic keys start `tf_`,
   progress stored under the `thermo_` prefix); Formula Books is an A4 booklet (`_tfBookHtml`) compiled from every
   `eq` table and tagged `disp` equation plus `.tfsrc/formula_book.js` (assumptions / "spot it" per topic);
-  Today/Progress/Test/Review/search are subject-aware (areas found/pipe/comp; storage `thermo_<area>_*`,
+  Today/Progress/Test/Review/search are subject-aware (areas found/pipe/comp/wind/batt — wind = Mechanical Energy Conversion, batt = Batteries, added for weeks 7–9; the Test page has an AREA picker for Thermofluids; storage `thermo_<area>_*`,
   `tf_exam_date`, `tf_plan_v1`, `tf_score_history`; test bank `.tfsrc/bank.js`). Play is still a placeholder.
   Accent colour is `--tf` / `--tf-tint` / `--tf-line`. Areas: `_tfAreas()`.
 
@@ -72,7 +72,7 @@ and sets `<subj>_completed` = ISO date → green "Completed" badges on Today/Pro
   delete config.json again, run the mock (`supabase/mock_supabase.py`), open `/.review/acct/`.
 
 ## Review tooling
-- `python3 tools/review_build.py <name>` → private build `.review/<name>/index.html` (doesn't touch .src or index.html).
+- `python3 tools/review_build.py <name>` → private build `.review/<name>/index.html` (doesn't touch .src or index.html; the sign-in gate is always off in these builds).
 - `node tools/note_shots.mjs <topicKey> <outDir> [--build name] [--theme light]` → headless-Chrome slices of a fully
   expanded note (`index.html#review=<topicKey>` opens it with every section/solution open) + report.json of render errors.
 - Student/professor review loop briefs and outputs: `.tfsrc/_review/` (gitignored).

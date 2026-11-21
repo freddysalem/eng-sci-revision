@@ -5,3 +5,5 @@
 .tfsrc/_*
 .review/
 supabase/admin.sql
+.tfsrc/txt79/
+tools/__pycache__/
