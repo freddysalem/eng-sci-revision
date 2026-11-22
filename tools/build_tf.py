@@ -104,17 +104,18 @@ def build_fbook():
     template, and bump the version the site loads it with so browsers never show a stale copy."""
     import hashlib
     fb = os.path.join(ROOT, 'fbook')
-    r = subprocess.run(['node', os.path.join(ROOT, 'tools', 'fbook_extract.js'), ROOT], capture_output=True, text=True)
-    print('fbook:', (r.stderr or r.stdout).strip())
-    if r.returncode != 0:
-        sys.exit('fbook data extraction failed')
+    for subj in ('tf', 'esa'):   # data.js (Thermofluids) and data_esa.js (Eng Sci A, from the notes in the template + .esasrc/formula_book.js)
+        r = subprocess.run(['node', os.path.join(ROOT, 'tools', 'fbook_extract.js'), ROOT, subj], capture_output=True, text=True)
+        print('fbook:', (r.stderr or r.stdout).strip())
+        if r.returncode != 0:
+            sys.exit('fbook data extraction failed (' + subj + ')')
     t = open(TPL, encoding='utf-8').read()
     pre = (':root {', 'html[data-theme="dark"] {', 'html[data-theme="light"] {', ':root, html[data-theme="dark"] {')
     rules = [l for l in t.split('\n') if l.strip().startswith(pre) and '--' in l and l.strip().endswith('}')]
     light = [l.strip()[len('html[data-theme="light"]'):] for l in rules if l.strip().startswith('html[data-theme="light"]')]
     open(os.path.join(fb, 'tokens.css'), 'w', encoding='utf-8').write('\n'.join(rules + ['.paper ' + l for l in light]) + '\n')
     h = hashlib.sha1()
-    for f in ('index.html', 'data.js', 'tokens.css'):
+    for f in ('index.html', 'data.js', 'data_esa.js', 'tokens.css'):
         h.update(open(os.path.join(fb, f), 'rb').read())
     ver = h.hexdigest()[:10]
     t2 = re.sub(r"_fbookVer\(\) \{ return '[^']*'; \}", "_fbookVer() { return '" + ver + "'; }", t, count=1)

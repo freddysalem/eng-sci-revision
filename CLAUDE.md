@@ -21,7 +21,7 @@ localStorage `app_subject` (`"esa"` | `"tf"`).
   `eq` table and tagged `disp` equation plus `.tfsrc/formula_book.js` (assumptions / "spot it" per topic);
   Today/Progress/Test/Review/search are subject-aware (areas found/pipe/comp/wind/batt — wind = Mechanical Energy Conversion, batt = Batteries, added for weeks 7–9; the Test page has an AREA picker for Thermofluids; storage `thermo_<area>_*`,
   `tf_exam_date`, `tf_plan_v1`, `tf_score_history`; test bank `.tfsrc/bank.js`). Play is still a placeholder.
-  Accent colour is `--tf` / `--tf-tint` / `--tf-line`. Areas: `_tfAreas()`.
+  Accent colour is `--tf` / `--tf-tint` / `--tf-line`. Areas: `_tfAreas()`. (Its Formula Books tab is now the fbook/ builder — see below.)
 
 ## Thermofluids notes
 Source of truth: `.tfsrc/notes/NN_tf_key.js` — one JS object per topic in the Eng Sci A block format
@@ -77,9 +77,20 @@ and sets `<subj>_completed` = ISO date → green "Completed" badges on Today/Pro
   expanded note (`index.html#review=<topicKey>` opens it with every section/solution open) + report.json of render errors.
 - Student/professor review loop briefs and outputs: `.tfsrc/_review/` (gitignored).
 
-## Thermofluids Formula Book (fbook/)
-- `fbook/index.html` is the build-your-own formula book, shown in the Thermofluids "Formula Book" tab via an iframe (`index.html#fbook` opens it directly).
-- `python3 tools/build_tf.py` regenerates `fbook/data.js` (equations + diagrams from `.tfsrc/notes` and `.tfsrc/diagrams`, via `tools/fbook_extract.js`), `fbook/tokens.css` (theme colours) and bumps `_fbookVer()` so browsers reload it. Equation ids are `topic_hash(source)`: new weeks just appear in the library; never renumber.
-- Books live in localStorage `tf_fbooks_v1` (written through `parent.localStorage`, so the account sync saves them per account); stars are shared with the notes via `eq_stars_v1`.
+## Formula Book builder (fbook/) — both subjects
+- `fbook/index.html` is the build-your-own formula book, shown in each subject's "Formula Book" tab via an iframe
+  (`index.html#fbook` = Thermofluids, `index.html#fbook=esa` = Eng Sci A). `?s=esa` in the iframe URL switches it to
+  Eng Sci A: loads `data_esa.js`, areas mech/elec/struct, accent `--accent`, books in `esa_fbooks_v1`.
+- Eng Sci A keeps its three ready-made A4 booklets (mode `formula`): sub-tabs "Build your own · Mechanics/Electrical/Structures booklet" sit above the builder (`fbTabs`, `fbHasSub`).
+- `python3 tools/build_tf.py` regenerates both data files via `tools/fbook_extract.js <root> [tf|esa]`, `fbook/tokens.css` (theme colours) and bumps `_fbookVer()` (hash of index/data/data_esa/tokens) so browsers reload it.
+  - Thermofluids `data.js`: equations + diagrams from `.tfsrc/notes` and `.tfsrc/diagrams`.
+  - Eng Sci A `data_esa.js`: evaluates the template's `Component` class in node and walks `_richNote(key)` for every
+    mech/elec/struct topic (eq tables, tagged/boxed `disp`, boxed results in `deriv`/`ex`; diagrams via `_t3dia`/`_edia`/`_fdia`).
+    Boxed numeric answers ("1266 m") are dropped; "Key Formula Summary" repeats are marked minor. **Re-run build_tf.py after editing any Eng Sci A note.**
+  - `.esasrc/formula_book.js`: per-topic triggers / assumptions / "spot it", `extra` equations that are course content but only in prose or
+    tables in the notes (projectiles, orbital period, standard I, thermal & self-weight, standard beam cases…), and `extraTopics`
+    (Electric Machines, W11 — no website note yet). Each extra cites its course source.
+- Equation ids are `topic_hash(source)`: new content just appears in the library; never renumber. Topic numbers for Eng Sci A are M1…/E1…/S1….
+- Books live in localStorage `tf_fbooks_v1` / `esa_fbooks_v1` (written through `parent.localStorage`, so the account sync saves them per account); stars are shared with the notes via `eq_stars_v1`.
 - External libraries (pinned): KaTeX 0.16.11, MathLive 0.101.0 (custom-equation editor), html-to-image 1.11.11 + jsPDF 2.5.1 (PDF download, loaded on demand).
 - Preview: `.review/ui/fbook` is a symlink to `../../fbook`.
